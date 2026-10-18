@@ -10,8 +10,8 @@ void createInertiaApp({
         resolvePageComponent(
             `./Pages/${name}.tsx`,
             import.meta.glob<{ default: any }>('./Pages/**/*.tsx'),
-        ),
-    setup({ el, App, props, _plugin }) {
+        ) as any,
+    setup({ el, App, props }) {
         if (typeof window !== 'undefined') {
             const root = createRoot(el);
             root.render(<App {...props} />);
