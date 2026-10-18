@@ -44,3 +44,12 @@ Inertia SSR module graph warmed up
 [32m2026-10-18 21:45:01[0m SSR Auth/Login [90m0.67ms[0m
 [32m2026-10-18 21:45:27[0m SSR Auth/Login [90m0.71ms[0m
 [32m2026-10-18 21:45:28[0m SSR Auth/Login [90m0.53ms[0m
+[2m23:29:34[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
+[2m23:29:34[22m [36m[1m[vite+][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
+[2m23:29:34[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/css/app.css?direct[22m
+[2m23:29:35[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/css/app.css?direct[22m
+[2m23:29:35[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/js/pages/Auth/Login.tsx, /resources/css/app.css?direct[22m
+[2m23:29:36[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/js/pages/Auth/Login.tsx, /resources/css/app.css?direct[22m
+[2m23:29:36[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/css/app.css?direct[22m
+[2m23:32:09[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
+[2m23:32:09[22m [36m[1m[vite+][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m

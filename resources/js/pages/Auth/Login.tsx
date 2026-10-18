@@ -23,10 +23,10 @@ export default function Login() {
     return (
         <>
             <Head title="Connexion" />
-            <div className="min-h-screen flex">
+            <div className="flex min-h-screen">
                 {/* Côté gauche – Branding avec image de fond */}
                 <div
-                    className="flex-1 relative bg-cover bg-center"
+                    className="relative flex-1 bg-cover bg-center"
                     style={{
                         backgroundImage: `url('/images/Login_BG_Light.jpg')`,
                     }}
@@ -36,35 +36,39 @@ export default function Login() {
                         <img
                             src="/images/SONARA_Logo.png"
                             alt="SONARA Logo"
-                            className="h-24 mb-8 drop-shadow-lg"
+                            className="mb-8 h-24 drop-shadow-lg"
                         />
-                        <h1 className="text-5xl font-bold text-blue-400 font-bauhaus mb-6 leading-tight">
+                        <h1 className="mb-6 font-bauhaus text-5xl leading-tight font-bold text-blue-400">
                             BON RETOUR A LA SONARA
                         </h1>
-                        <p className="text-gray-200 text-lg font-trebuchet max-w-md leading-relaxed">
-                            Pour avoir accès à votre portail, nous vous prions de vous connecter à
-                            votre compte au moyen de votre matricule et de votre mot de passe.
+                        <p className="max-w-md font-trebuchet text-lg leading-relaxed text-gray-200">
+                            Pour avoir accès à votre portail, nous vous prions
+                            de vous connecter à votre compte au moyen de votre
+                            matricule et de votre mot de passe.
                         </p>
                     </div>
                 </div>
 
                 {/* Côté droit – Panneau de connexion */}
-                <div className="w-96 bg-blue-900 p-8 flex flex-col">
+                <div className="flex w-96 flex-col bg-blue-900 p-8">
                     {/* Icône utilisateur */}
-                    <div className="flex justify-center mb-8">
-                        <div className="bg-white w-20 h-20 rounded-2xl flex items-center justify-center shadow-xl">
-                            <span className="text-4xl text-gray-800 material-symbols-outlined">
+                    <div className="mb-8 flex justify-center">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-xl">
+                            <span className="material-symbols-outlined text-4xl text-gray-800">
                                 person
                             </span>
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-6">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-1 flex-col gap-6"
+                    >
                         {/* Champ Matricule */}
                         <div>
                             <label
                                 htmlFor="matricule"
-                                className="block text-sm text-blue-200 mb-2 font-trebuchet"
+                                className="mb-2 block font-trebuchet text-sm text-blue-200"
                             >
                                 Matricule
                             </label>
@@ -74,13 +78,17 @@ export default function Login() {
                                 type="text"
                                 autoComplete="username"
                                 required
-                                className="w-full bg-blue-800/50 border border-blue-600/50 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-blue-300/50 transition-all"
+                                className="w-full rounded-xl border border-blue-600/50 bg-blue-800/50 px-4 py-3.5 text-white placeholder-blue-300/50 transition-all focus:ring-2 focus:ring-green-500 focus:outline-none"
                                 value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                onChange={(e) =>
+                                    setData('email', e.target.value)
+                                }
                                 placeholder="Votre matricule"
                             />
                             {errors.email && (
-                                <p className="mt-1 text-sm text-red-400">{errors.email}</p>
+                                <p className="mt-1 text-sm text-red-400">
+                                    {errors.email}
+                                </p>
                             )}
                         </div>
 
@@ -88,7 +96,7 @@ export default function Login() {
                         <div className="relative">
                             <label
                                 htmlFor="password"
-                                className="block text-sm text-blue-200 mb-2 font-trebuchet"
+                                className="mb-2 block font-trebuchet text-sm text-blue-200"
                             >
                                 Mot de passe
                             </label>
@@ -98,24 +106,30 @@ export default function Login() {
                                 type={showPassword ? 'text' : 'password'}
                                 autoComplete="current-password"
                                 required
-                                className={`w-full bg-blue-800/50 border border-blue-600/50 rounded-xl px-4 py-3.5 text-white pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-blue-300/50 transition-all ${
+                                className={`w-full rounded-xl border border-blue-600/50 bg-blue-800/50 px-4 py-3.5 pr-12 text-white placeholder-blue-300/50 transition-all focus:ring-2 focus:ring-green-500 focus:outline-none ${
                                     errors.password ? 'border-red-500' : ''
                                 }`}
                                 value={data.password}
-                                onChange={(e) => setData('password', e.target.value)}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
                                 placeholder="••••••••"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -mt-3 text-blue-300 hover:text-white transition-colors"
+                                className="absolute top-1/2 right-3 -mt-3 text-blue-300 transition-colors hover:text-white"
                             >
                                 <span className="material-symbols-outlined">
-                                    {showPassword ? 'visibility_off' : 'visibility'}
+                                    {showPassword
+                                        ? 'visibility_off'
+                                        : 'visibility'}
                                 </span>
                             </button>
                             {errors.password && (
-                                <p className="mt-1 text-sm text-red-400">{errors.password}</p>
+                                <p className="mt-1 text-sm text-red-400">
+                                    {errors.password}
+                                </p>
                             )}
                         </div>
 
@@ -123,26 +137,34 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={processing}
-                            className={`w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-green-400 disabled:to-green-500 text-white font-medium py-4 rounded-xl transition-all flex items-center justify-center space-x-2 font-trebuchet ${
-                                processing ? 'opacity-70 cursor-not-allowed' : ''
+                            className={`flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-green-500 to-green-600 py-4 font-trebuchet font-medium text-white transition-all hover:from-green-600 hover:to-green-700 disabled:from-green-400 disabled:to-green-500 ${
+                                processing
+                                    ? 'cursor-not-allowed opacity-70'
+                                    : ''
                             }`}
                         >
-                            <span className="material-symbols-outlined">login</span>
-                            {processing ? 'Connexion en cours...' : 'Je me connecte'}
+                            <span className="material-symbols-outlined">
+                                login
+                            </span>
+                            {processing
+                                ? 'Connexion en cours...'
+                                : 'Je me connecte'}
                         </button>
                     </form>
 
                     {/* Mot de passe oublié / Signaler un problème */}
-                    <div className="mt-auto text-center space-y-3">
-                        <p className="text-blue-200 text-sm font-trebuchet">
-                            Vous ne parvenez pas à vous connecter ? Cliquez ci-dessous pour contacter
-                            l'administrateur.
+                    <div className="mt-auto space-y-3 text-center">
+                        <p className="font-trebuchet text-sm text-blue-200">
+                            Vous ne parvenez pas à vous connecter ? Cliquez
+                            ci-dessous pour contacter l'administrateur.
                         </p>
                         <button
                             type="button"
-                            className="w-full bg-transparent border border-blue-500/50 text-blue-200 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center justify-center space-x-2 font-trebuchet"
+                            className="flex w-full items-center justify-center space-x-2 rounded-xl border border-blue-500/50 bg-transparent py-3 font-trebuchet text-blue-200 transition-colors hover:bg-white/10"
                         >
-                            <span className="material-symbols-outlined">flag</span>
+                            <span className="material-symbols-outlined">
+                                flag
+                            </span>
                             Signaler un problème
                         </button>
                     </div>
