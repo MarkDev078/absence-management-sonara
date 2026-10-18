@@ -1,0 +1,46 @@
+
+> dev
+> vp dev
+
+Inertia SSR dev endpoint: /__inertia_ssr
+[2m21:53:56[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
+  Plugin: [35m@laravel/vite-plugin-wayfinder[39m
+Warming up Inertia SSR module graph...
+
+  [34m[1mVITE+[22m v0.3.0[39m  
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[laravel:fonts] Optimized font fallbacks require the optional "fontaine" package. Install it, or set "optimizedFallbacks: false" on your fonts to disable the feature.
+
+  [31m[1mLARAVEL[22m v13.33.0[39m  [2mplugin[22m [1mv3.2.0[22m
+
+  [32m➜[39m  [1mAPP_URL[22m: [36mhttp://localhost:[1m8000[22m[39m
+Inertia SSR module graph warmed up
+[32m2026-10-18 20:56:26[0m SSR Auth/Login [90m19.95ms[0m
+[32m2026-10-18 20:57:58[0m SSR welcome [90m27.25ms[0m
+[32m2026-10-18 20:58:06[0m SSR Auth/Login [90m0.64ms[0m
+[32m2026-10-18 21:12:42[0m SSR welcome [90m0.51ms[0m
+[2m22:12:42[22m [31m[1m[vite+][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mflushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task.
+[32m2026-10-18 21:12:44[0m SSR Auth/Login [90m0.68ms[0m
+[2m22:12:44[22m [31m[1m[vite+][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mflushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task.
+[32m2026-10-18 21:17:21[0m SSR Auth/Login [90m0.73ms[0m
+[2m22:17:22[22m [31m[1m[vite+][22m[39m [31m[2m(client)[22m[39m [2m[console.error] [22mflushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task.
+[2m22:19:18[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/css/app.css?direct, /resources/js/pages/Auth/Login.tsx[22m
+[2m22:41:27[22m [36m[1m[vite+][22m[39m [32mvite.config.ts changed, restarting server...[39m
+Inertia SSR dev endpoint: /__inertia_ssr
+[2m22:41:28[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
+  Plugin: [35m@laravel/vite-plugin-wayfinder[39m
+Warming up Inertia SSR module graph...
+[2m22:41:28[22m [36m[1m[vite+][22m[39m server restarted.
+Inertia SSR module graph warmed up
+
+  [31m[1mLARAVEL[22m v13.33.0[39m  [2mplugin[22m [1mv3.2.0[22m
+
+  [32m➜[39m  [1mAPP_URL[22m: [36mhttp://localhost:[1m8000[22m[39m
+[32m2026-10-18 21:41:28[0m SSR Auth/Login [90m25.66ms[0m
+[laravel:fonts] Optimized font fallbacks require the optional "fontaine" package. Install it, or set "optimizedFallbacks: false" on your fonts to disable the feature.
+[2m22:41:54[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/resources/js/pages/Auth/Login.tsx, /resources/css/app.css?direct[22m
+[32m2026-10-18 21:45:01[0m SSR Auth/Login [90m0.67ms[0m
+[32m2026-10-18 21:45:27[0m SSR Auth/Login [90m0.71ms[0m
+[32m2026-10-18 21:45:28[0m SSR Auth/Login [90m0.53ms[0m
