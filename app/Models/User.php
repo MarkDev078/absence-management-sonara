@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Carbon;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
@@ -50,7 +49,7 @@ use Illuminate\Support\Carbon;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -78,7 +77,7 @@ class User extends Authenticatable
      */
     public function hasAnyRole(array $roles): bool
     {
-        return !! count(array_intersect($roles, [$this->role]));
+        return (bool) count(array_intersect($roles, [$this->role]));
     }
 
     /**

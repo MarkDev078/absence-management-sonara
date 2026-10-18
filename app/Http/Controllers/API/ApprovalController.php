@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Approval;
 use App\Models\AbsenceRequest;
+use App\Models\Approval;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class ApprovalController extends Controller
@@ -19,14 +18,14 @@ class ApprovalController extends Controller
     {
         $user = $request->user();
 
-        # Check if user can approve (manager, RH, or admin)
-        if (!$user->isManager() && !$user->isRh() && !$user->isAdmin()) {
+        // Check if user can approve (manager, RH, or admin)
+        if (! $user->isManager() && ! $user->isRh() && ! $user->isAdmin()) {
             abort(403, 'Unauthorized');
         }
 
-        # Get pending approvals where the user is the approver
+        // Get pending approvals where the user is the approver
         $approvals = Approval::where('approver_id', $user->id)
-            ->whereNull('status') # Pending approvals have no status yet
+            ->whereNull('status') // Pending approvals have no status yet
             ->with(['absenceRequest.employee', 'absenceRequest.absenceType'])
             ->get();
 
@@ -40,45 +39,45 @@ class ApprovalController extends Controller
     {
         $user = $request->user();
 
-        # Check if user can approve this request
-        if (!$user->isManager() && !$user->isRh() && !$user->isAdmin()) {
+        // Check if user can approve this request
+        if (! $user->isManager() && ! $user->isRh() && ! $user->isAdmin()) {
             abort(403, 'Unauthorized');
         }
 
-        # Verify the approver matches the authenticated user
+        // Verify the approver matches the authenticated user
         if ($approval->approver_id !== $user->id) {
             abort(403, 'Unauthorized');
         }
 
-        # Check if approval is still pending
+        // Check if approval is still pending
         if ($approval->status !== null) {
             throw ValidationException::withMessages([
-                'status' => ['This approval has already been processed.']
+                'status' => ['This approval has already been processed.'],
             ]);
         }
 
         $absenceRequest = $approval->absenceRequest;
 
-        # Check if this is the correct level for the user's role
+        // Check if this is the correct level for the user's role
         $expectedLevel = $this->getExpectedApprovalLevel($user);
         if ($approval->step !== $expectedLevel) {
             abort(403, 'Unauthorized for this approval level');
         }
 
-        # Check if previous levels are approved
-        if (!$this->arePreviousLevelsApproved($absenceRequest, $approval->step)) {
+        // Check if previous levels are approved
+        if (! $this->arePreviousLevelsApproved($absenceRequest, $approval->step)) {
             throw ValidationException::withMessages([
-                'step' => ['Previous approval levels must be completed first.']
+                'step' => ['Previous approval levels must be completed first.'],
             ]);
         }
 
-        # Approve this level
+        // Approve this level
         $approval->update([
             'status' => 'approved',
             'approved_at' => now(),
         ]);
 
-        # Move to next level or mark as fully approved
+        // Move to next level or mark as fully approved
         $this->processApprovalWorkflow($absenceRequest, $approval->step);
 
         $approval->load(['absenceRequest.employee', 'absenceRequest.absenceType']);
@@ -93,38 +92,38 @@ class ApprovalController extends Controller
     {
         $user = $request->user();
 
-        # Check if user can approve this request
-        if (!$user->isManager() && !$user->isRh() && !$user->isAdmin()) {
+        // Check if user can approve this request
+        if (! $user->isManager() && ! $user->isRh() && ! $user->isAdmin()) {
             abort(403, 'Unauthorized');
         }
 
-        # Verify the approver matches the authenticated user
+        // Verify the approver matches the authenticated user
         if ($approval->approver_id !== $user->id) {
             abort(403, 'Unauthorized');
         }
 
-        # Check if approval is still pending
+        // Check if approval is still pending
         if ($approval->status !== null) {
             throw ValidationException::withMessages([
-                'status' => ['This approval has already been processed.']
+                'status' => ['This approval has already been processed.'],
             ]);
         }
 
         $absenceRequest = $approval->absenceRequest;
 
-        # Check if this is the correct level for the user's role
+        // Check if this is the correct level for the user's role
         $expectedLevel = $this->getExpectedApprovalLevel($user);
         if ($approval->step !== $expectedLevel) {
             abort(403, 'Unauthorized for this approval level');
         }
 
-        # Reject the request
+        // Reject the request
         $approval->update([
             'status' => 'rejected',
             'approved_at' => now(),
         ]);
 
-        # Update absence request status to rejected
+        // Update absence request status to rejected
         $absenceRequest->update([
             'status' => 'rejected',
             'current_approval_level' => $approval->step,
@@ -141,11 +140,11 @@ class ApprovalController extends Controller
     private function getExpectedApprovalLevel(User $user): int
     {
         if ($user->isManager()) {
-            return 1; # Manager is first level
+            return 1; // Manager is first level
         } elseif ($user->isRh()) {
-            return 2; # RH is second level
+            return 2; // RH is second level
         } elseif ($user->isAdmin()) {
-            return 3; # Admin is third level
+            return 3; // Admin is third level
         }
 
         return 0;
@@ -156,12 +155,12 @@ class ApprovalController extends Controller
      */
     private function arePreviousLevelsApproved(AbsenceRequest $absenceRequest, int $currentLevel): bool
     {
-        # For level 1 (manager), there are no previous levels
+        // For level 1 (manager), there are no previous levels
         if ($currentLevel <= 1) {
             return true;
         }
 
-        # Check if all previous levels are approved
+        // Check if all previous levels are approved
         $previousApprovals = $absenceRequest->approvals()
             ->where('step', '<', $currentLevel)
             ->where('status', 'approved')
@@ -175,27 +174,27 @@ class ApprovalController extends Controller
      */
     private function processApprovalWorkflow(AbsenceRequest $absenceRequest, int $approvedLevel): void
     {
-        # Count how many levels are approved
+        // Count how many levels are approved
         $approvedCount = $absenceRequest->approvals()
             ->where('status', 'approved')
             ->count();
 
-        # Define total levels (can be made configurable)
-        $totalLevels = 3; # Manager, RH, Admin
+        // Define total levels (can be made configurable)
+        $totalLevels = 3; // Manager, RH, Admin
 
         if ($approvedCount >= $totalLevels) {
-            # All levels approved
+            // All levels approved
             $absenceRequest->update([
                 'status' => 'approved',
             ]);
         } else {
-            # Move to next level - create approval record for next level
+            // Move to next level - create approval record for next level
             $nextLevel = $approvedLevel + 1;
             $absenceRequest->update([
                 'current_approval_level' => $nextLevel,
             ]);
 
-            # Create approval record for the next level
+            // Create approval record for the next level
             $nextApproverId = $this->getApproverIdForLevel($absenceRequest, $nextLevel);
             if ($nextApproverId) {
                 Approval::create([
@@ -233,6 +232,7 @@ class ApprovalController extends Controller
     {
         // For now, we'll use the first RH user we find
         $rhUser = User::where('role', 'rh')->first();
+
         return $rhUser ? $rhUser->id : null;
     }
 
@@ -243,6 +243,7 @@ class ApprovalController extends Controller
     {
         // For now, we'll use the first admin user we find
         $adminUser = User::where('role', 'admin')->first();
+
         return $adminUser ? $adminUser->id : null;
     }
 }

@@ -7,6 +7,7 @@ use App\Models\AbsenceRequest;
 use App\Models\AbsenceType;
 use App\Models\Approval;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -25,10 +26,10 @@ class AbsenceRequestController extends Controller
             // Employees see their own requests
             $requests = $user->absenceRequests()->with(['absenceType', 'employee', 'approvals.approver'])->get();
         } elseif ($user->isManager()) {
-            # Managers see their team's requests
+            // Managers see their team's requests
             $requests = $user->managedAbsenceRequests()->with(['absenceType', 'employee', 'approvals.approver'])->get();
         } elseif ($user->isRh() || $user->isAdmin()) {
-            # RH and Admin see all requests
+            // RH and Admin see all requests
             $requests = AbsenceRequest::with(['absenceType', 'employee', 'approvals.approver'])->get();
         } else {
             $requests = collect();
@@ -44,8 +45,8 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        # Employees can create absence requests
-        if (!$user->isEmployee()) {
+        // Employees can create absence requests
+        if (! $user->isEmployee()) {
             abort(403, 'Unauthorized');
         }
 
@@ -56,15 +57,15 @@ class AbsenceRequestController extends Controller
             'reason' => 'required|string',
         ]);
 
-        # Check if the absence type requires medical visit for long durations
+        // Check if the absence type requires medical visit for long durations
         $absenceType = AbsenceType::findOrFail($request->absence_type_id);
-        $startDate = \Carbon\Carbon::parse($request->start_date);
-        $endDate = \Carbon\Carbon::parse($request->end_date);
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
         $duration = $endDate->diffInDays($startDate) + 1;
 
         if ($absenceType->max_duration_days && $duration > $absenceType->max_duration_days) {
             throw ValidationException::withMessages([
-                'end_date' => ['The duration exceeds the maximum allowed for this absence type.']
+                'end_date' => ['The duration exceeds the maximum allowed for this absence type.'],
             ]);
         }
 
@@ -78,7 +79,7 @@ class AbsenceRequestController extends Controller
             'current_approval_level' => 0,
         ]);
 
-        # Load relationships for response
+        // Load relationships for response
         $absenceRequest->load('absenceType', 'employee');
 
         return response()->json($absenceRequest, 201);
@@ -91,15 +92,15 @@ class AbsenceRequestController extends Controller
     {
         $user = Auth::user();
 
-        # Check if user can view this request
+        // Check if user can view this request
         if ($user->isEmployee() && $absenceRequest->employee_id !== $user->id) {
-            # Employee can only see their own requests
+            // Employee can only see their own requests
             abort(403, 'Unauthorized');
-        } elseif ($user->isManager() && !$user->managedAbsenceRequests()->where('id', $absenceRequest->id)->exists()) {
-            # Manager can only see their team's requests
+        } elseif ($user->isManager() && ! $user->managedAbsenceRequests()->where('id', $absenceRequest->id)->exists()) {
+            // Manager can only see their team's requests
             abort(403, 'Unauthorized');
         }
-        # RH and Admin can see all
+        // RH and Admin can see all
 
         $absenceRequest->load(['absenceType', 'employee', 'approvals.approver', 'returnToWork']);
 
@@ -113,7 +114,7 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        # Only employees can update their own draft requests
+        // Only employees can update their own draft requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && $absenceRequest->status === 'draft') {
             $request->validate([
                 'absence_type_id' => 'sometimes|required|exists:absence_types,id',
@@ -122,18 +123,18 @@ class AbsenceRequestController extends Controller
                 'reason' => 'sometimes|required|string',
             ]);
 
-            # Check duration constraints if dates changed
+            // Check duration constraints if dates changed
             if ($request->has('start_date') || $request->has('end_date')) {
                 $absenceType = AbsenceType::findOrFail(
                     $request->absence_type_id ?? $absenceRequest->absence_type_id
                 );
-                $startDate = \Carbon\Carbon::parse($request->input('start_date', $absenceRequest->start_date));
-                $endDate = \Carbon\Carbon::parse($request->input('end_date', $absenceRequest->end_date));
+                $startDate = Carbon::parse($request->input('start_date', $absenceRequest->start_date));
+                $endDate = Carbon::parse($request->input('end_date', $absenceRequest->end_date));
                 $duration = $endDate->diffInDays($startDate) + 1;
 
                 if ($absenceType->max_duration_days && $duration > $absenceType->max_duration_days) {
                     throw ValidationException::withMessages([
-                        'end_date' => ['The duration exceeds the maximum allowed for this absence type.']
+                        'end_date' => ['The duration exceeds the maximum allowed for this absence type.'],
                     ]);
                 }
             }
@@ -154,7 +155,7 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        # Only employees can delete their own draft requests
+        // Only employees can delete their own draft requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && $absenceRequest->status === 'draft') {
             $absenceRequest->delete();
 
@@ -171,15 +172,15 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        # Only employees can submit their own draft requests
+        // Only employees can submit their own draft requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && $absenceRequest->status === 'draft') {
-            # Change status to pending and set to first approval level
+            // Change status to pending and set to first approval level
             $absenceRequest->update([
                 'status' => 'pending',
-                'current_approval_level' => 1, # First level is manager
+                'current_approval_level' => 1, // First level is manager
             ]);
 
-            # Create approval record for the first level (manager)
+            // Create approval record for the first level (manager)
             $employee = $absenceRequest->employee;
             $managerId = $employee->manager_id;
 
@@ -187,10 +188,10 @@ class AbsenceRequestController extends Controller
                 Approval::create([
                     'absence_request_id' => $absenceRequest->id,
                     'approver_id' => $managerId,
-                    'step' => 1, # First level is manager
-                    # status defaults to NULL (pending)
-                    # approved_at defaults to NULL
-                    # comment defaults to NULL
+                    'step' => 1, // First level is manager
+                    // status defaults to NULL (pending)
+                    // approved_at defaults to NULL
+                    // comment defaults to NULL
                 ]);
             }
 
@@ -209,10 +210,10 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        # Only employees can cancel their own pending requests
+        // Only employees can cancel their own pending requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && in_array($absenceRequest->status, ['pending', 'approved'])) {
-            # Check if it's already been approved at all levels
-            if ($absenceRequest->approvals()->where('status', 'approved')->count() >= 3) { # Assuming 3 levels
+            // Check if it's already been approved at all levels
+            if ($absenceRequest->approvals()->where('status', 'approved')->count() >= 3) { // Assuming 3 levels
                 abort(403, 'Cannot cancel fully approved request');
             }
 
@@ -233,7 +234,7 @@ class AbsenceRequestController extends Controller
     {
         $user = $request->user();
 
-        if (!$user->isManager()) {
+        if (! $user->isManager()) {
             abort(403, 'Unauthorized');
         }
 

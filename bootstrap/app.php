@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Middleware\HandleInertiaRequests;
+use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
-use Illuminate\Auth\AuthServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 
 $app = Application::configure(basePath: dirname(__DIR__))
@@ -26,7 +27,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             HandleInertiaRequests::class,
-            \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            AddLinkHeadersForPreloadedAssets::class,
         ]);
 
         // Set redirect callback for guests to return null for API requests

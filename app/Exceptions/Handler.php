@@ -2,18 +2,18 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<int, class-string<\Throwable>>
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
         //
@@ -41,9 +41,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $e
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function render($request, Throwable $e)
     {
@@ -53,9 +52,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @return Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -65,10 +63,12 @@ class Handler extends ExceptionHandler
 
         if ($this->shouldReturnJson($request, $exception) || $request->is('api/*')) {
             error_log('Returning JSON response');
+
             return response()->json(['message' => $exception->getMessage()], 401);
         }
 
         error_log('Returning redirect to login');
+
         return redirect()->guest(route('login'));
     }
 }

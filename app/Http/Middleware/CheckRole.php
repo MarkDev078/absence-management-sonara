@@ -11,10 +11,9 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      * @param  string[]  ...$roles
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
@@ -42,9 +41,8 @@ class CheckRole
     /**
      * Check if user has a specific role.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  string  $role
-     * @return bool
      */
     protected function hasRole($user, $role): bool
     {
@@ -56,6 +54,7 @@ class CheckRole
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -67,7 +66,6 @@ class CheckRole
      *
      * @param  mixed  $user
      * @param  string  $role
-     * @return bool
      */
     protected function checkRoleMatch($user, $role): bool
     {

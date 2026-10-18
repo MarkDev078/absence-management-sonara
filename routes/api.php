@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\AbsenceRequestController;
+use App\Http\Controllers\API\AbsenceTypeController;
+use App\Http\Controllers\API\ApprovalController;
+use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\AbsenceTypeController;
-use App\Http\Controllers\API\AbsenceRequestController;
-use App\Http\Controllers\API\ApprovalController;
 
 /*
 |--------------------------------------------------------------------------

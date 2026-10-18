@@ -55,3 +55,10 @@ Inertia SSR module graph warmed up
 [2m23:32:09[22m [36m[1m[vite+][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
 [2m23:39:01[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
 [2m23:39:01[22m [36m[1m[vite+][22m[39m [34m[2m(ssr)[22m[39m [32mpage reload [39m[2mresources/js/app.tsx[22m
+[2m23:45:21[22m [36m[1m[vite+][22m[39m [32mfull reload[39m [2mroutes\api.php[22m
+[2m23:45:21[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
+  Plugin: [35m@laravel/vite-plugin-wayfinder[39m
+[2m23:45:22[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
+  Plugin: [35m@laravel/vite-plugin-wayfinder[39m
+[2m23:45:22[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
+  Plugin: [35m@laravel/vite-plugin-wayfinder[39m

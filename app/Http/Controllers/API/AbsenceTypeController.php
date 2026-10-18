@@ -60,7 +60,7 @@ class AbsenceTypeController extends Controller
         $this->authorize('update', $absenceType);
 
         $request->validate([
-            'label' => 'sometimes|required|string|max:100|unique:absence_types,label,' . $absenceType->id,
+            'label' => 'sometimes|required|string|max:100|unique:absence_types,label,'.$absenceType->id,
             'requires_medical_visit' => 'sometimes|boolean',
             'max_duration_days' => 'sometimes|integer|min:1',
             'description' => 'sometimes|string',
@@ -82,7 +82,7 @@ class AbsenceTypeController extends Controller
         // Check if absence type is in use
         if ($absenceType->absenceRequests()->exists()) {
             return response()->json([
-                'message' => 'Cannot delete absence type that is in use'
+                'message' => 'Cannot delete absence type that is in use',
             ], 409);
         }
 

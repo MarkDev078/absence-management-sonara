@@ -2,17 +2,15 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
      * @return void
      */
     public function __construct(Auth $auth)
@@ -35,13 +33,14 @@ class Authenticate extends Middleware
         // For API requests, return null to prevent redirect (will trigger JSON response)
         if ($request->expectsJson() || $request->is('api/*')) {
             error_log('=== RETURNING NULL FOR API REQUEST ===');
+
             return null;
         }
 
         // For web requests, try to use the redirect route if named route exists
-        if ($request->expectsJson() === false && !$request->is('api/*')) {
+        if ($request->expectsJson() === false && ! $request->is('api/*')) {
             // Try to get the login route if it exists
-            if (method_exists($this, 'redirectTo') && !isset(static::$redirectToCallback)) {
+            if (method_exists($this, 'redirectTo') && ! isset(static::$redirectToCallback)) {
                 // Call parent redirectTo if no callback is set
                 return parent::redirectTo($request);
             }
@@ -54,6 +53,7 @@ class Authenticate extends Middleware
                     // Check if this is a route name that exists
                     if ($this->routeExists($redirect)) {
                         error_log('=== RETURNING REDIRECT FROM CALLBACK: '.$redirect.' ===');
+
                         return $redirect;
                     }
                 }
@@ -61,6 +61,7 @@ class Authenticate extends Middleware
         }
 
         error_log('=== RETURNING NULL (NO REDIRECT) ===');
+
         return null;
     }
 
@@ -69,7 +70,7 @@ class Authenticate extends Middleware
      */
     protected function routeExists(string $name): bool
     {
-        if (!method_exists($this, 'routes')) {
+        if (! method_exists($this, 'routes')) {
             return false;
         }
 
