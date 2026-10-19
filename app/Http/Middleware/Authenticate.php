@@ -37,29 +37,6 @@ class Authenticate extends Middleware
             return null;
         }
 
-        // For web requests, try to use the redirect route if named route exists
-        if ($request->expectsJson() === false && ! $request->is('api/*')) {
-            // Try to get the login route if it exists
-            if (method_exists($this, 'redirectTo') && ! isset(static::$redirectToCallback)) {
-                // Call parent redirectTo if no callback is set
-                return parent::redirectTo($request);
-            }
-
-            // If we have a callback set, it might be trying to call route('login')
-            // Let's check if we can safely call route('login') without error
-            if (static::$redirectToCallback) {
-                $redirect = call_user_func(static::$redirectToCallback, $request);
-                if (is_string($redirect)) {
-                    // Check if this is a route name that exists
-                    if ($this->routeExists($redirect)) {
-                        error_log('=== RETURNING REDIRECT FROM CALLBACK: '.$redirect.' ===');
-
-                        return $redirect;
-                    }
-                }
-            }
-        }
-
         error_log('=== RETURNING NULL (NO REDIRECT) ===');
 
         return null;

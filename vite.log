@@ -62,3 +62,26 @@ Inertia SSR module graph warmed up
   Plugin: [35m@laravel/vite-plugin-wayfinder[39m
 [2m23:45:22[22m [36m[1m[vite+][22m[39m [90m[2m(client)[22m[39m info: Types generated for actions, routes, form variants
   Plugin: [35m@laravel/vite-plugin-wayfinder[39m
+node:internal/fs/watchers:316
+    const error = new UVException({
+                  ^
+
+Error: EBUSY: resource busy or locked, watch 'D:\WeCode\absence-management-system\absence-management-sonara-2-0\absence-management-sonara-2-0.rar'
+[90m    at FSWatcher.<computed> (node:internal/fs/watchers:316:19)[39m
+[90m    at Object.watch (node:fs:2522:36)[39m
+    at createFsWatchInstance [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14324:16[90m)[39m
+    at setFsWatchListener [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14366:14[90m)[39m
+    at NodeFsHandler._watchWithNodeFs [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14481:20[90m)[39m
+    at NodeFsHandler._handleFile [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14525:24[90m)[39m
+    at NodeFsHandler._addToNodeFs [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14699:26[90m)[39m
+Emitted 'error' event on FSWatcher instance at:
+    at FSWatcher._handleError [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:15501:146[90m)[39m
+    at NodeFsHandler._addToNodeFs [90m(file:///D:/WeCode/absence-management-system/absence-management-sonara-2-0/[39mnode_modules/[4m@voidzero-dev/vite-plus-core[24m/dist/vite/node/chunks/node.js:14704:18[90m)[39m {
+  errno: [33m-4082[39m,
+  syscall: [32m'watch'[39m,
+  code: [32m'EBUSY'[39m,
+  path: [32m'D:\\WeCode\\absence-management-system\\absence-management-sonara-2-0\\absence-management-sonara-2-0.rar'[39m,
+  filename: [32m'D:\\WeCode\\absence-management-system\\absence-management-sonara-2-0\\absence-management-sonara-2-0.rar'[39m
+}
+
+Node.js v26.0.0

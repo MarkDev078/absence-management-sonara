@@ -10,7 +10,7 @@ class Approval extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'absence_request_id',
@@ -33,6 +33,8 @@ class Approval extends Model
 
     /**
      * Get the absence request that owns the approval.
+     *
+     * @return BelongsTo<AbsenceRequest, $this>
      */
     public function absenceRequest(): BelongsTo
     {
@@ -41,6 +43,8 @@ class Approval extends Model
 
     /**
      * Get the user who is the approver.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function approver(): BelongsTo
     {

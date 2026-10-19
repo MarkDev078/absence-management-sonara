@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AbsenceRequest;
 use App\Models\Approval;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -14,7 +15,7 @@ class ApprovalController extends Controller
     /**
      * Get pending approvals for the authenticated user.
      */
-    public function pending(Request $request)
+    public function pending(Request $request): JsonResponse
     {
         $user = $request->user();
 
@@ -35,7 +36,7 @@ class ApprovalController extends Controller
     /**
      * Approve an absence request at the current level.
      */
-    public function approve(Request $request, Approval $approval)
+    public function approve(Request $request, Approval $approval): JsonResponse
     {
         $user = $request->user();
 
@@ -50,13 +51,19 @@ class ApprovalController extends Controller
         }
 
         // Check if approval is still pending
-        if ($approval->status !== null) {
+        /** @var ?string $approvalStatus */
+        $approvalStatus = $approval->status;
+        if ($approvalStatus !== null) {
             throw ValidationException::withMessages([
                 'status' => ['This approval has already been processed.'],
             ]);
         }
 
         $absenceRequest = $approval->absenceRequest;
+
+        if (! $absenceRequest) {
+            abort(404, 'Absence request not found');
+        }
 
         // Check if this is the correct level for the user's role
         $expectedLevel = $this->getExpectedApprovalLevel($user);
@@ -88,7 +95,7 @@ class ApprovalController extends Controller
     /**
      * Reject an absence request.
      */
-    public function reject(Request $request, Approval $approval)
+    public function reject(Request $request, Approval $approval): JsonResponse
     {
         $user = $request->user();
 
@@ -103,13 +110,19 @@ class ApprovalController extends Controller
         }
 
         // Check if approval is still pending
-        if ($approval->status !== null) {
+        /** @var ?string $approvalStatus */
+        $approvalStatus = $approval->status;
+        if ($approvalStatus !== null) {
             throw ValidationException::withMessages([
                 'status' => ['This approval has already been processed.'],
             ]);
         }
 
         $absenceRequest = $approval->absenceRequest;
+
+        if (! $absenceRequest) {
+            abort(404, 'Absence request not found');
+        }
 
         // Check if this is the correct level for the user's role
         $expectedLevel = $this->getExpectedApprovalLevel($user);
@@ -215,6 +228,7 @@ class ApprovalController extends Controller
     private function getApproverIdForLevel(AbsenceRequest $absenceRequest, int $level): ?int
     {
         $employee = $absenceRequest->employee;
+        /** @var User $employee */
 
         return match ($level) {
             1 => $employee->manager_id, // Manager level

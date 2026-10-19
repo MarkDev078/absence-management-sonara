@@ -6,6 +6,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -74,6 +77,8 @@ class User extends Authenticatable
 
     /**
      * Check if the user has any of the given roles.
+     *
+     * @param  string[]  $roles
      */
     public function hasAnyRole(array $roles): bool
     {
@@ -114,32 +119,40 @@ class User extends Authenticatable
 
     /**
      * Get the manager that the user reports to.
+     *
+     * @return BelongsTo<User, $this>
      */
-    public function manager()
+    public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager_id');
     }
 
     /**
      * Get the subordinates of the user.
+     *
+     * @return HasMany<User, $this>
      */
-    public function subordinates()
+    public function subordinates(): HasMany
     {
         return $this->hasMany(User::class, 'manager_id');
     }
 
     /**
      * Get the absence requests made by the user (as employee).
+     *
+     * @return HasMany<AbsenceRequest, $this>
      */
-    public function absenceRequests()
+    public function absenceRequests(): HasMany
     {
         return $this->hasMany(AbsenceRequest::class, 'employee_id');
     }
 
     /**
      * Get the absence requests where the user is a manager (through subordinates).
+     *
+     * @return HasManyThrough<AbsenceRequest, User, $this>
      */
-    public function managedAbsenceRequests()
+    public function managedAbsenceRequests(): HasManyThrough
     {
         return $this->hasManyThrough(
             AbsenceRequest::class,

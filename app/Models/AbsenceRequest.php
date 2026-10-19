@@ -12,7 +12,7 @@ class AbsenceRequest extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'employee_id',
@@ -37,6 +37,8 @@ class AbsenceRequest extends Model
 
     /**
      * Get the employee that owns the absence request.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function employee(): BelongsTo
     {
@@ -45,6 +47,8 @@ class AbsenceRequest extends Model
 
     /**
      * Get the absence type for the request.
+     *
+     * @return BelongsTo<AbsenceType, $this>
      */
     public function absenceType(): BelongsTo
     {
@@ -53,6 +57,8 @@ class AbsenceRequest extends Model
 
     /**
      * Get the approvals for the absence request.
+     *
+     * @return HasMany<Approval, $this>
      */
     public function approvals(): HasMany
     {
@@ -61,6 +67,8 @@ class AbsenceRequest extends Model
 
     /**
      * Get the return to work record for the absence request.
+     *
+     * @return HasOne<ReturnToWork, $this>
      */
     public function returnToWork(): HasOne
     {

@@ -8,6 +8,7 @@ use App\Models\AbsenceType;
 use App\Models\Approval;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -17,7 +18,7 @@ class AbsenceRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $user = $request->user();
 
@@ -41,7 +42,7 @@ class AbsenceRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $user = $request->user();
 
@@ -63,6 +64,7 @@ class AbsenceRequestController extends Controller
         $endDate = Carbon::parse($request->end_date);
         $duration = $endDate->diffInDays($startDate) + 1;
 
+        /** @var AbsenceType $absenceType */
         if ($absenceType->max_duration_days && $duration > $absenceType->max_duration_days) {
             throw ValidationException::withMessages([
                 'end_date' => ['The duration exceeds the maximum allowed for this absence type.'],
@@ -88,7 +90,7 @@ class AbsenceRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AbsenceRequest $absenceRequest)
+    public function show(AbsenceRequest $absenceRequest): JsonResponse
     {
         $user = Auth::user();
 
@@ -110,7 +112,7 @@ class AbsenceRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AbsenceRequest $absenceRequest)
+    public function update(Request $request, AbsenceRequest $absenceRequest): JsonResponse
     {
         $user = $request->user();
 
@@ -132,6 +134,7 @@ class AbsenceRequestController extends Controller
                 $endDate = Carbon::parse($request->input('end_date', $absenceRequest->end_date));
                 $duration = $endDate->diffInDays($startDate) + 1;
 
+                /** @var AbsenceType $absenceType */
                 if ($absenceType->max_duration_days && $duration > $absenceType->max_duration_days) {
                     throw ValidationException::withMessages([
                         'end_date' => ['The duration exceeds the maximum allowed for this absence type.'],
@@ -151,7 +154,7 @@ class AbsenceRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AbsenceRequest $absenceRequest)
+    public function destroy(Request $request, AbsenceRequest $absenceRequest): JsonResponse
     {
         $user = $request->user();
 
@@ -168,7 +171,7 @@ class AbsenceRequestController extends Controller
     /**
      * Submit an absence request for approval.
      */
-    public function submit(Request $request, AbsenceRequest $absenceRequest)
+    public function submit(Request $request, AbsenceRequest $absenceRequest): JsonResponse
     {
         $user = $request->user();
 
@@ -182,6 +185,7 @@ class AbsenceRequestController extends Controller
 
             // Create approval record for the first level (manager)
             $employee = $absenceRequest->employee;
+            /** @var User $employee */
             $managerId = $employee->manager_id;
 
             if ($managerId) {
@@ -206,7 +210,7 @@ class AbsenceRequestController extends Controller
     /**
      * Cancel an absence request.
      */
-    public function cancel(Request $request, AbsenceRequest $absenceRequest)
+    public function cancel(Request $request, AbsenceRequest $absenceRequest): JsonResponse
     {
         $user = $request->user();
 
@@ -230,7 +234,7 @@ class AbsenceRequestController extends Controller
     /**
      * Get absence requests for the authenticated user's team (managers only).
      */
-    public function teamRequests(Request $request)
+    public function teamRequests(Request $request): JsonResponse
     {
         $user = $request->user();
 

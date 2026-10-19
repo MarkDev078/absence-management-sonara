@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('position')->nullable()->after('last_name');
             $table->string('department')->nullable()->after('position');
             $table->enum('status', ['actif', 'inactif', 'conge', 'suspendu'])->default('actif')->after('department');
-            $table->foreignId('manager_id')->nullable()->constrained('users')->nullOnDelete()->after('status');
+            $table->foreignId('manager_id')->nullable()->constrained('users')->nullOnDelete();
         });
     }
 

@@ -10,7 +10,7 @@ class AbsenceType extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'label',
@@ -31,6 +31,8 @@ class AbsenceType extends Model
 
     /**
      * Get the absence requests for this absence type.
+     *
+     * @return HasMany<AbsenceRequest, $this>
      */
     public function absenceRequests(): HasMany
     {

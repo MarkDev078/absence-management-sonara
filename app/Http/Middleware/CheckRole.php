@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ class CheckRole
      * Handle an incoming request.
      *
      * @param  Closure(Request): (Response)  $next
-     * @param  string[]  ...$roles
+     * @param  string  ...$roles
      * @return Response
      */
     public function handle(Request $request, Closure $next, ...$roles)
@@ -40,11 +41,8 @@ class CheckRole
 
     /**
      * Check if user has a specific role.
-     *
-     * @param  Request  $request
-     * @param  string  $role
      */
-    protected function hasRole($user, $role): bool
+    protected function hasRole(mixed $user, string $role): bool
     {
         // Handle role strings with pipe separator (e.g., "manager|rh|admin")
         if (strpos($role, '|') !== false) {
@@ -63,14 +61,12 @@ class CheckRole
 
     /**
      * Check if user role matches the given role.
-     *
-     * @param  mixed  $user
-     * @param  string  $role
      */
-    protected function checkRoleMatch($user, $role): bool
+    protected function checkRoleMatch(mixed $user, string $role): bool
     {
         // Support for both string role and hasRole method
         if (method_exists($user, 'hasRole')) {
+            /** @var Authenticatable $user */
             return $user->hasRole($role);
         }
 

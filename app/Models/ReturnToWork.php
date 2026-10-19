@@ -17,7 +17,7 @@ class ReturnToWork extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'absence_request_id',
@@ -42,6 +42,8 @@ class ReturnToWork extends Model
 
     /**
      * Get the absence request that owns the return to work record.
+     *
+     * @return BelongsTo<AbsenceRequest, $this>
      */
     public function absenceRequest(): BelongsTo
     {

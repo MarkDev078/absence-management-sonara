@@ -4,14 +4,18 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\AbsenceType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AbsenceTypeController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         // Only active absence types or based on role
         $query = AbsenceType::query();
@@ -26,7 +30,7 @@ class AbsenceTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         // Only RH and Admin can create absence types
         $this->authorize('create', AbsenceType::class);
@@ -46,7 +50,7 @@ class AbsenceTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AbsenceType $absenceType)
+    public function show(AbsenceType $absenceType): JsonResponse
     {
         return response()->json($absenceType);
     }
@@ -54,7 +58,7 @@ class AbsenceTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AbsenceType $absenceType)
+    public function update(Request $request, AbsenceType $absenceType): JsonResponse
     {
         // Only RH and Admin can update absence types
         $this->authorize('update', $absenceType);
@@ -74,7 +78,7 @@ class AbsenceTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AbsenceType $absenceType)
+    public function destroy(AbsenceType $absenceType): JsonResponse
     {
         // Only RH and Admin can delete absence types
         $this->authorize('delete', $absenceType);
