@@ -5,41 +5,37 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     /**
-     * Login user and create token.
-     *
-     * @return JsonResponse
+     * Login user and redirect to dashboard.
      */
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'matricule' => 'required|integer',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('matricule', $request->matricule)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'matricule' => ['Les identifiants fournis sont incorrects.'],
             ]);
         }
 
-        // Ensure the user can have tokens
-        $user->tokens()->delete(); // Revoke old tokens if you want single token per user
+        Auth::login($user);
 
-        $token = $user->createToken('auth-token')->plainTextToken;
+        $request->session()->regenerate();
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ]);
+        return redirect()->intended('/dashboard');
     }
 
     /**

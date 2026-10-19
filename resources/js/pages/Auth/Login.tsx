@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        matricule: '',
         password: '',
     });
 
@@ -12,10 +12,9 @@ export default function Login() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post('/api/login', {
+        post('/login', {
             onSuccess: () => {
                 reset();
-                window.location.href = '/dashboard';
             },
         });
     };
@@ -74,20 +73,20 @@ export default function Login() {
                             </label>
                             <input
                                 id="matricule"
-                                name="email"
+                                name="matricule"
                                 type="text"
                                 autoComplete="username"
                                 required
                                 className="w-full rounded-xl border border-blue-600/50 bg-blue-800/50 px-4 py-3.5 text-white placeholder-blue-300/50 transition-all focus:ring-2 focus:ring-green-500 focus:outline-none"
-                                value={data.email}
+                                value={data.matricule}
                                 onChange={(e) =>
-                                    setData('email', e.target.value)
+                                    setData('matricule', e.target.value)
                                 }
                                 placeholder="Votre matricule"
                             />
-                            {errors.email && (
+                            {errors.matricule && (
                                 <p className="mt-1 text-sm text-red-400">
-                                    {errors.email}
+                                    {errors.matricule}
                                 </p>
                             )}
                         </div>

@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Public routes
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-
 // Protected routes (require authentication)
 Route::middleware('auth:sanctum')->group(function () {
     // User profile

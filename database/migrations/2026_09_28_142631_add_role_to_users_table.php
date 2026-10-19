@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('role')->default('employee')->after('password');
-            $table->string('matricule')->unique()->nullable()->after('role');
+            $table->integer('matricule')->unique()->after('role');
             $table->string('first_name')->nullable()->after('matricule');
-            $table->string('last_name')->nullable()->after('first_name');
+            $table->string('last_name')->after('first_name');
             $table->string('position')->nullable()->after('last_name');
             $table->string('department')->nullable()->after('position');
             $table->enum('status', ['actif', 'inactif', 'conge', 'suspendu'])->default('actif')->after('department');
