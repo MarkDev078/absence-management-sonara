@@ -73,6 +73,7 @@
             "@php artisan config:clear --ansi",
             "@lint:check",
             "@types:check",
+            "npm run build",
             "@php artisan test"
         ],
         "post-autoload-dump": [
