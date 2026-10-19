@@ -8,8 +8,8 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.tsx`,
-            import.meta.glob<{ default: any }>('./Pages/**/*.tsx'),
+            `./pages/${name}.tsx`,
+            import.meta.glob<{ default: any }>('./pages/**/*.tsx'),
         ) as any,
     setup({ el, App, props }) {
         if (typeof window !== 'undefined') {
