@@ -54,8 +54,11 @@ class AbsenceRequestController extends Controller
         $request->validate([
             'absence_type_id' => 'required|exists:absence_types,id',
             'start_date' => 'required|date|after_or_equal:today',
+            'start_time_slot' => 'nullable|in:matin-P,soir-P,matin-Q,apres-midi-Q,nuit-Q',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'end_time_slot' => 'nullable|in:matin-P,soir-P,matin-Q,apres-midi-Q,nuit-Q',
             'reason' => 'required|string',
+            'contact_phone' => 'nullable|string|max:20',
         ]);
 
         // Check if the absence type requires medical visit for long durations
@@ -75,8 +78,11 @@ class AbsenceRequestController extends Controller
             'employee_id' => $user->id,
             'absence_type_id' => $request->absence_type_id,
             'start_date' => $request->start_date,
+            'start_time_slot' => $request->start_time_slot,
             'end_date' => $request->end_date,
+            'end_time_slot' => $request->end_time_slot,
             'reason' => $request->reason,
+            'contact_phone' => $request->contact_phone,
             'status' => 'draft',
             'current_approval_level' => 0,
         ]);
@@ -121,8 +127,11 @@ class AbsenceRequestController extends Controller
             $request->validate([
                 'absence_type_id' => 'sometimes|required|exists:absence_types,id',
                 'start_date' => 'sometimes|required|date|after_or_equal:today',
+                'start_time_slot' => 'sometimes|nullable|in:matin-P,soir-P,matin-Q,apres-midi-Q,nuit-Q',
                 'end_date' => 'sometimes|required|date|after_or_equal:start_date',
+                'end_time_slot' => 'sometimes|nullable|in:matin-P,soir-P,matin-Q,apres-midi-Q,nuit-Q',
                 'reason' => 'sometimes|required|string',
+                'contact_phone' => 'sometimes|nullable|string|max:20',
             ]);
 
             // Check duration constraints if dates changed

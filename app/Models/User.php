@@ -39,7 +39,7 @@ use Laravel\Sanctum\HasApiTokens;
     'first_name',
     'last_name',
     'position',
-    'department',
+    'department_id',
     'status',
     'manager_id',
 ])]
@@ -123,6 +123,16 @@ class User extends Authenticatable
     public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager_id');
+    }
+
+    /**
+     * Get the department or service the user belongs to.
+     *
+     * @return BelongsTo<Department, $this>
+     */
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     /**

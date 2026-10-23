@@ -18,8 +18,11 @@ class AbsenceRequest extends Model
         'employee_id',
         'absence_type_id',
         'start_date',
+        'start_time_slot',
         'end_date',
+        'end_time_slot',
         'reason',
+        'contact_phone',
         'status',
         'current_approval_level',
     ];
