@@ -109,7 +109,10 @@ export default function AbsenceRequestIndex() {
 
             if (!res.ok) {
                 const errData = await res.json().catch(() => ({}));
-                setError(errData.message || 'Erreur lors de la création de la demande.');
+                setError(
+                    errData.message ||
+                        'Erreur lors de la création de la demande.',
+                );
                 return;
             }
 
@@ -134,17 +137,17 @@ export default function AbsenceRequestIndex() {
     const timeSlotGroup = (
         label: string,
         dateKey: keyof FormData,
-        slotKey: keyof FormData
+        slotKey: keyof FormData,
     ) => (
         <div className="space-y-2">
-            <label className="block mb-1 text-sm font-medium text-white/90">
+            <label className="mb-1 block text-sm font-medium text-white/90">
                 {label}
             </label>
             <div className="grid grid-cols-2 gap-2">
                 {TIME_SLOTS.map((slot) => (
                     <label
                         key={slot.value}
-                        className={`rounded-lg border px-3 py-2 text-sm text-white transition cursor-pointer ${
+                        className={`cursor-pointer rounded-lg border px-3 py-2 text-sm text-white transition ${
                             form[slotKey] === slot.value
                                 ? 'border-[#009632] bg-[#009632]/20'
                                 : 'border-white/30 bg-white/10 hover:border-white/50'
@@ -158,9 +161,11 @@ export default function AbsenceRequestIndex() {
                             onChange={(e) =>
                                 handleChange(slotKey, e.target.value)
                             }
-                            className="sr-only peer"
+                            className="peer sr-only"
                         />
-                        <span className="peer-checked:font-medium">{slot.label}</span>
+                        <span className="peer-checked:font-medium">
+                            {slot.label}
+                        </span>
                     </label>
                 ))}
             </div>
@@ -169,7 +174,7 @@ export default function AbsenceRequestIndex() {
                 value={form[dateKey]}
                 onChange={(e) => handleChange(dateKey, e.target.value)}
                 required
-                className="w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2 focus-ring-[#009632]/30"
+                className="focus-ring-[#009632]/30 w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2"
             />
         </div>
     );
@@ -192,21 +197,19 @@ export default function AbsenceRequestIndex() {
 
                 <main className="min-h-screen bg-white lg:grid lg:grid-cols-[40%_60%]">
                     {/* Panneau gauche : identité SONARA */}
-                    <section
-                        className="relative hidden min-h-screen overflow-hidden bg-white lg:flex lg:flex-col lg:items-center lg:justify-center p-8"
-                    >
+                    <section className="relative hidden min-h-screen overflow-hidden bg-white p-8 lg:flex lg:flex-col lg:items-center lg:justify-center">
                         <div
                             className="absolute inset-0 opacity-[0.08]"
                             style={{
                                 backgroundImage:
-                                    "linear-gradient(135deg, #044E9B 1px, transparent 1px), linear-gradient(45deg, #009632 1px, transparent 1px)",
-                                backgroundSize: "38px 38px",
+                                    'linear-gradient(135deg, #044E9B 1px, transparent 1px), linear-gradient(45deg, #009632 1px, transparent 1px)',
+                                backgroundSize: '38px 38px',
                             }}
                             aria-hidden="true"
                         />
 
                         <div className="relative z-10 flex flex-col items-center">
-                            <div className="flex size-32 items-center justify-center bg-[#044E9B]/10 p-4 mb-8">
+                            <div className="mb-8 flex size-32 items-center justify-center bg-[#044E9B]/10 p-4">
                                 <img
                                     src="/images/SONARA_Logo.png"
                                     alt="SONARA"
@@ -214,37 +217,39 @@ export default function AbsenceRequestIndex() {
                                 />
                             </div>
 
-                            <h1 className="text-center text-2xl font-bold uppercase tracking-wide text-[#044E9B] lg:text-3xl">
+                            <h1 className="text-center text-2xl font-bold tracking-wide text-[#044E9B] uppercase lg:text-3xl">
                                 Demandes d'absence
                             </h1>
 
                             <p className="mt-6 max-w-md px-8 text-center text-base leading-relaxed text-gray-700">
-                                Gérez vos demandes de congés et absences. Créez une nouvelle demande
-                                ou consultez l'historique de vos demandes existantes.
+                                Gérez vos demandes de congés et absences. Créez
+                                une nouvelle demande ou consultez l'historique
+                                de vos demandes existantes.
                             </p>
                         </div>
                     </section>
 
                     {/* Panneau droit : formulaire et liste */}
                     <section className="relative flex min-h-screen flex-col overflow-hidden bg-[#044E9B] p-4 lg:p-0">
-                        <div
-                            className="relative z-10 flex w-full max-w-[500px] flex-col items-center mx-auto lg:mx-0 lg:max-w-none lg:h-full lg:pr-8"
-                        >
+                        <div className="relative z-10 mx-auto flex w-full max-w-[500px] flex-col items-center lg:mx-0 lg:h-full lg:max-w-none lg:pr-8">
                             {/* Carte de formulaire */}
-                            <div className="w-full rounded-[25px] border border-white bg-[#044E9B]/90 px-6 py-8 shadow-[0_10px_20px_10px_rgba(0,0,0,0.25)] mb-8 lg:mb-0 lg:mr-8">
+                            <div className="mb-8 w-full rounded-[25px] border border-white bg-[#044E9B]/90 px-6 py-8 shadow-[0_10px_20px_10px_rgba(0,0,0,0.25)] lg:mr-8 lg:mb-0">
                                 <h2 className="mb-6 text-center text-xl font-bold text-white">
                                     Nouvelle demande
                                 </h2>
 
                                 {error && (
-                                    <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-200 text-sm">
+                                    <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">
                                         {error}
                                     </div>
                                 )}
 
-                                <form onSubmit={handleSubmit} className="space-y-4">
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="space-y-4"
+                                >
                                     <div>
-                                        <label className="block mb-2 text-sm font-medium text-white/90">
+                                        <label className="mb-2 block text-sm font-medium text-white/90">
                                             Type d'absence
                                         </label>
                                         <select
@@ -252,10 +257,10 @@ export default function AbsenceRequestIndex() {
                                             onChange={(e) =>
                                                 handleChange(
                                                     'absence_type_id',
-                                                    e.target.value
+                                                    e.target.value,
                                                 )
                                             }
-                                            className="w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white placeholder-white/60 outline-none focus:border-[#009632] focus:ring-2 focus-ring-[#009632]/30"
+                                            className="focus-ring-[#009632]/30 w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white placeholder-white/60 outline-none focus:border-[#009632] focus:ring-2"
                                         >
                                             <option value="">
                                                 Sélectionner un type
@@ -275,33 +280,36 @@ export default function AbsenceRequestIndex() {
                                     {timeSlotGroup(
                                         'Début — date et créneau',
                                         'start_date',
-                                        'start_time_slot'
+                                        'start_time_slot',
                                     )}
 
                                     {/* Période/quart de fin */}
                                     {timeSlotGroup(
                                         'Reprise — date et créneau',
                                         'end_date',
-                                        'end_time_slot'
+                                        'end_time_slot',
                                     )}
 
                                     <div>
-                                        <label className="block mb-2 text-sm font-medium text-white/90">
+                                        <label className="mb-2 block text-sm font-medium text-white/90">
                                             Motif
                                         </label>
                                         <textarea
                                             value={form.reason}
                                             onChange={(e) =>
-                                                handleChange('reason', e.target.value)
+                                                handleChange(
+                                                    'reason',
+                                                    e.target.value,
+                                                )
                                             }
                                             required
                                             rows={3}
-                                            className="w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2 focus-ring-[#009632]/30"
+                                            className="focus-ring-[#009632]/30 w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block mb-2 text-sm font-medium text-white/90">
+                                        <label className="mb-2 block text-sm font-medium text-white/90">
                                             Téléphone de contact
                                         </label>
                                         <input
@@ -310,18 +318,18 @@ export default function AbsenceRequestIndex() {
                                             onChange={(e) =>
                                                 handleChange(
                                                     'contact_phone',
-                                                    e.target.value
+                                                    e.target.value,
                                                 )
                                             }
                                             placeholder="+237 6 XX XXX XXX"
-                                            className="w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2 focus-ring-[#009632]/30"
+                                            className="focus-ring-[#009632]/30 w-full rounded-lg border border-white/30 bg-white/10 px-4 py-3 text-white outline-none focus:border-[#009632] focus:ring-2"
                                         />
                                     </div>
 
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className="w-full rounded-lg bg-[#009632] px-4 py-3 text-white font-medium transition hover:bg-[#00852d] disabled:opacity-70"
+                                        className="w-full rounded-lg bg-[#009632] px-4 py-3 font-medium text-white transition hover:bg-[#00852d] disabled:opacity-70"
                                     >
                                         {loading
                                             ? 'Création en cours...'
@@ -338,8 +346,9 @@ export default function AbsenceRequestIndex() {
 
                                 <div className="space-y-3">
                                     {requests.length === 0 ? (
-                                        <div className="text-center py-8 text-white/70">
-                                            Aucune demande d'absence pour le moment.
+                                        <div className="py-8 text-center text-white/70">
+                                            Aucune demande d'absence pour le
+                                            moment.
                                         </div>
                                     ) : (
                                         requests.map((request) => (
@@ -347,27 +356,36 @@ export default function AbsenceRequestIndex() {
                                                 key={request.id}
                                                 className="rounded-lg border border-white/20 bg-white/10 p-4"
                                             >
-                                                <div className="flex items-center justify-between mb-2">
+                                                <div className="mb-2 flex items-center justify-between">
                                                     <span className="text-sm font-medium text-white">
-                                                        {request.absenceType?.label || 'Type inconnu'}
+                                                        {request.absenceType
+                                                            ?.label ||
+                                                            'Type inconnu'}
                                                     </span>
-                                                    <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_STYLES[request.status]}`}>
+                                                    <span
+                                                        className={`rounded px-2 py-1 text-xs font-medium ${STATUS_STYLES[request.status]}`}
+                                                    >
                                                         {request.status}
                                                     </span>
                                                 </div>
                                                 <div className="text-xs text-white/70">
                                                     {request.start_date}
-                                                    {request.start_time_slot ? ` (${request.start_time_slot})` : ''}
+                                                    {request.start_time_slot
+                                                        ? ` (${request.start_time_slot})`
+                                                        : ''}
                                                     &rarr;
                                                     {request.end_date}
-                                                    {request.end_time_slot ? ` (${request.end_time_slot})` : ''}
+                                                    {request.end_time_slot
+                                                        ? ` (${request.end_time_slot})`
+                                                        : ''}
                                                 </div>
-                                                <div className="mt-2 text-xs text-white/60 line-clamp-1">
+                                                <div className="mt-2 line-clamp-1 text-xs text-white/60">
                                                     {request.reason}
                                                 </div>
                                                 {request.contact_phone && (
                                                     <div className="mt-1 text-xs text-white/50">
-                                                        📞 {request.contact_phone}
+                                                        📞{' '}
+                                                        {request.contact_phone}
                                                     </div>
                                                 )}
                                             </div>

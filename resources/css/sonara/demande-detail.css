@@ -1,0 +1,236 @@
+/* ========== Détail Demande ========== */
+.detail-card {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 18px 20px 20px;
+    opacity: 0;
+    transform: translateY(16px);
+}
+.detail-card.animated {
+    animation: dashCardIn 0.6s ease-out forwards;
+    animation-delay: 0.14s;
+}
+
+.detail-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.detail-back {
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid #dbe2ea;
+    background: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a2a3a;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.detail-back .material-symbols-outlined {
+    font-size: 18px;
+}
+.detail-statut-pill {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+.detail-statut-pill.statut-attente {
+    background: #fff8e1;
+    color: #b7791f;
+    border-color: #f5e6a3;
+}
+.detail-statut-pill.statut-ok {
+    background: #e8f5e9;
+    color: #1b7a3d;
+    border-color: #b6e2c0;
+}
+.detail-statut-pill.statut-ko {
+    background: #fce8e9;
+    color: #b91c1c;
+    border-color: #f0b8bb;
+}
+.detail-statut-pill .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.detail-success {
+    background: #eaf7ee;
+    border: 1px solid #9cd3a8;
+    color: #1e7a34;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 16px;
+}
+.detail-success .material-symbols-outlined {
+    color: #1e7a34;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+}
+.detail-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.detail-field label {
+    display: block;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #1a2a3a;
+    margin-bottom: 6px;
+}
+.detail-input {
+    height: 40px;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 12px;
+    overflow: hidden;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    font-weight: 600;
+}
+.detail-input span:first-child {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.detail-input-icon {
+    width: 42px;
+    height: 100%;
+    background: #eef2f7;
+    border-left: 1px solid #dbe2ea;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: #5a6a7a;
+}
+.detail-input-icon.blue {
+    background: #0e4a90;
+    color: #fff;
+}
+.detail-input-icon.has-logo {
+    background: #fff;
+    padding: 4px;
+    overflow: hidden;
+    width: 60px;
+    display: grid;
+    place-items: center;
+}
+.detail-op-logo {
+    max-width: 52px;
+    max-height: 24px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+.detail-contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.detail-input-icon .material-symbols-outlined {
+    font-size: 18px;
+}
+.detail-textarea {
+    min-height: 84px;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    padding: 10px 0 10px 12px;
+    gap: 8px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    line-height: 1.4;
+}
+.detail-textarea span:first-child {
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.detail-textarea .detail-input-icon {
+    width: 42px;
+    border-radius: 0 6px 6px 0;
+    margin: -10px 0 -10px 0;
+    height: auto;
+    min-height: 84px;
+}
+
+.detail-cancel {
+    margin-top: 8px;
+    align-self: flex-end;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: none;
+    background: #e74c3c;
+    color: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.25);
+}
+.detail-cancel .material-symbols-outlined {
+    font-size: 18px;
+}
+.detail-cancel:hover {
+    filter: brightness(0.95);
+}
+
+@media (max-width: 900px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 560px) {
+    .detail-card {
+        padding: 14px 14px 16px;
+    }
+    .detail-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

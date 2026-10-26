@@ -1,0 +1,530 @@
+/* ========== Historique ========== */
+.hist-root .dash-icon-btn-active {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.hist-card {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 18px 18px 16px;
+    opacity: 0;
+    transform: translateY(16px);
+}
+.hist-card.animated {
+    animation: dashCardIn 0.6s ease-out forwards;
+    animation-delay: 0.14s;
+}
+
+.hist-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.hist-title {
+    font-family: 'Bauhaus 93', 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #0e4a90;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.hist-title-count {
+    font-weight: 600;
+    color: #6a7a8a;
+    text-transform: none;
+    font-size: 16px;
+}
+.hist-subtitle {
+    font-size: 11.5px;
+    color: #6a7a8a;
+    margin-top: 4px;
+    line-height: 1.4;
+    max-width: 560px;
+}
+.hist-header-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.hist-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.hist-icon-btn:hover {
+    border-color: #0e4a90;
+    background: #f0f5ff;
+}
+.hist-icon-btn .material-symbols-outlined {
+    font-size: 18px;
+    color: #1a2a3a;
+}
+.hist-icon-close {
+    border-color: #e6eaf0;
+}
+
+.hist-select-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.hist-select-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+.hist-select-btn .material-symbols-outlined {
+    font-size: 18px;
+    color: #1a2a3a;
+}
+.hist-select-delete {
+    background: #e23c3c;
+    border-color: #e23c3c;
+    color: #fff;
+}
+.hist-select-delete .material-symbols-outlined {
+    color: #fff;
+}
+.hist-select-delete:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.hist-select-search {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hist-search-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    height: 38px;
+    width: 100%;
+    flex: 1;
+    max-width: none;
+    margin-bottom: 14px;
+}
+.hist-select-toolbar .hist-search-wrap {
+    margin-bottom: 0;
+}
+.hist-search-filter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #eef2f7;
+    border-right: 1px solid #dbe2ea;
+    padding: 0 28px 0 10px;
+    height: 100%;
+    flex-shrink: 0;
+}
+.hist-search-filter select {
+    appearance: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a2a3a;
+    cursor: pointer;
+    padding-right: 4px;
+}
+.hist-search-filter .material-symbols-outlined {
+    position: absolute;
+    right: 8px;
+    font-size: 18px;
+    color: #5a6a7a;
+    pointer-events: none;
+}
+.hist-search-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    min-width: 0;
+}
+.hist-search-wrap input::placeholder {
+    color: #8a98aa;
+}
+.hist-search-btn {
+    width: 38px;
+    height: 36px;
+    border: none;
+    border-left: 1px solid #dbe2ea;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.hist-search-btn .material-symbols-outlined {
+    font-size: 18px;
+    color: #1a2a3a;
+}
+
+.hist-table-wrap {
+    border: 1px solid #e6eaf0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    max-height: 380px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.hist-table-wrap::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    display: block;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.95)
+    );
+    pointer-events: none;
+    margin-top: -24px;
+}
+.hist-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.hist-table thead th {
+    background: #eef2f7;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #1a2a3a;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e6eaf0;
+    white-space: nowrap;
+}
+.hist-table tbody td {
+    padding: 10px 12px;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    border-bottom: 1px solid #e8ecf1;
+    vertical-align: middle;
+}
+.hist-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.hist-table tbody tr:hover {
+    filter: brightness(0.98);
+}
+.hist-table tbody tr.selected {
+    background: #eef4ff !important;
+}
+.hist-table tbody tr.selectable {
+    cursor: pointer;
+}
+
+/* Lignes colorées selon l'état — comme maquette */
+.hist-table tbody tr.row-attente {
+    background: #fff8e1;
+}
+.hist-table tbody tr.row-attente td {
+    background: transparent;
+}
+.hist-table tbody tr.row-ok {
+    background: #e8f5e9;
+}
+.hist-table tbody tr.row-ok td {
+    background: transparent;
+}
+.hist-table tbody tr.row-ko {
+    background: #fce8e9;
+}
+.hist-table tbody tr.row-ko td {
+    background: transparent;
+}
+
+.hist-td-num {
+    font-weight: 700;
+    color: #37474f;
+    width: 54px;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 14px !important;
+}
+.hist-num-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    vertical-align: middle;
+    line-height: 1;
+}
+.hist-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid #8a98aa;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: #fff;
+}
+.hist-check.checked {
+    background: #0e4a90;
+    border-color: #0e4a90;
+    color: #fff;
+}
+.hist-check .material-symbols-outlined {
+    font-size: 14px;
+}
+.hist-check.checked .material-symbols-outlined {
+    font-size: 14px;
+    color: #fff;
+}
+.hist-num {
+    font-size: 12.5px;
+}
+.hist-td-nature {
+    font-weight: 500;
+}
+.hist-td-nature.blue {
+    color: #0e4a90;
+    font-weight: 600;
+}
+.hist-td-date {
+    white-space: nowrap;
+}
+.hist-date-main {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a2a3a;
+}
+.hist-date-sub {
+    display: block;
+    font-size: 11px;
+    color: #8a98aa;
+    margin-top: 2px;
+}
+.hist-td-etat {
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 12.5px;
+    letter-spacing: 0.1px;
+}
+.hist-table tbody td.statut-attente {
+    color: #f39c12 !important;
+}
+.hist-table tbody td.statut-ok {
+    color: #0fa84e !important;
+}
+.hist-table tbody td.statut-ko {
+    color: #e74c3c !important;
+}
+.hist-table tbody td.statut-selected {
+    color: #0e4a90 !important;
+}
+.icon-selected {
+    color: #0e4a90 !important;
+}
+.icon-neutral {
+    color: #1a2a3a !important;
+}
+.hist-date-main.blue {
+    color: #0e4a90 !important;
+}
+.hist-td-icon {
+    width: 36px;
+    text-align: center;
+}
+.hist-td-icon .material-symbols-outlined {
+    font-size: 20px;
+}
+.icon-attente {
+    color: #d48a00;
+}
+.icon-ok {
+    color: #0fa84e;
+}
+.icon-ko {
+    color: #e23c3c;
+}
+.hist-cancel-link {
+    font-size: 11.5px;
+    color: #0fa84e;
+    font-weight: 700;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+.hist-cancel-link:hover {
+    color: #0e4a90;
+}
+.hist-empty {
+    text-align: center;
+    padding: 18px;
+    color: #8a98aa;
+    font-size: 12.5px;
+}
+
+/* Avertissement Dialog */
+.avert-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: fadeIn 0.2s;
+}
+.avert-dialog {
+    background: #fff;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    animation: dashPopIn 0.28s ease-out;
+}
+.avert-header {
+    background: linear-gradient(90deg, #fde4a6 0%, #f5a623 55%, #e69500 100%);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #fff;
+    position: relative;
+}
+.avert-header h2 {
+    font-family: 'Bauhaus 93', 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+.avert-header .material-symbols-outlined {
+    font-size: 24px;
+    color: #fff;
+}
+.avert-body {
+    padding: 18px 20px 14px;
+    text-align: center;
+}
+.avert-body p {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    line-height: 1.45;
+}
+.avert-ask {
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 12.5px;
+}
+.avert-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 48px;
+}
+.avert-btn {
+    border: none;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: filter 0.18s;
+}
+.avert-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+.avert-btn-danger {
+    background: #e23c3c;
+    color: #fff;
+}
+.avert-btn-danger:hover {
+    filter: brightness(0.95);
+}
+.avert-btn-cancel {
+    background: #e6eaf0;
+    color: #1a2a3a;
+}
+.avert-btn-cancel:hover {
+    background: #dbe2ea;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 860px) {
+    .hist-card {
+        padding: 14px 12px 12px;
+    }
+    .hist-search-wrap {
+        max-width: 100%;
+    }
+    .hist-table thead th {
+        font-size: 11px;
+        padding: 8px 8px;
+    }
+    .hist-table tbody td {
+        padding: 8px 8px;
+        font-size: 11.5px;
+    }
+    .hist-td-date {
+        font-size: 11px;
+    }
+}
+@media (max-width: 560px) {
+    .hist-header {
+        flex-direction: column;
+    }
+    .hist-table-wrap {
+        overflow-x: auto;
+    }
+    .hist-table {
+        min-width: 540px;
+    }
+}

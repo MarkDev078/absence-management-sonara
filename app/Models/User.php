@@ -22,9 +22,12 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $remember_token
  * @property string $role
  * @property int $matricule
+ * @property string|null $phone
  * @property string|null $first_name
  * @property string $last_name
  * @property string|null $position
+ * @property string|null $date_naissance
+ * @property string|null $lieu_naissance
  * @property string|null $department
  * @property string $status
  * @property int|null $manager_id
@@ -36,9 +39,12 @@ use Laravel\Sanctum\HasApiTokens;
     'password',
     'role',
     'matricule',
+    'phone',
     'first_name',
     'last_name',
     'position',
+    'date_naissance',
+    'lieu_naissance',
     'department_id',
     'status',
     'manager_id',
@@ -62,6 +68,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'date_naissance' => 'date',
         ];
     }
 

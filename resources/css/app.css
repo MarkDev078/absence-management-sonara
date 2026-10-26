@@ -1,5 +1,19 @@
 @import 'tailwindcss';
 
+@import './sonara/app.css';
+@import './sonara/index.css';
+@import './sonara/nouvelle-demande.css';
+@import './sonara/historique.css';
+@import './sonara/demande-detail.css';
+
+@font-face {
+    font-family: 'Bauhaus 93';
+    src: url('/fonts/BAUHS93.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 

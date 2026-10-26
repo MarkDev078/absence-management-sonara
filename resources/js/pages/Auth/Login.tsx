@@ -1,6 +1,10 @@
-import { useForm } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
-import React, { useState } from 'react';
+import { useForm } from '@inertiajs/react';
+import React, { useState, useEffect } from 'react';
+import { useToast } from '../../components/useToast';
+import ToastContainer from '../../components/ToastContainer';
+
+type FieldErrors = { matricule: string; password: string };
 
 export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -8,296 +12,304 @@ export default function Login() {
         password: '',
     });
 
+    const { addToast } = useToast();
     const [showPassword, setShowPassword] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [clientErrors, setClientErrors] = useState<FieldErrors>({
+        matricule: '',
+        password: '',
+    });
+    const a = mounted ? 'animated' : '';
+
+    useEffect(() => {
+        const t = setTimeout(() => setMounted(true), 80);
+        return () => clearTimeout(t);
+    }, []);
+
+    const validate = (): boolean => {
+        const newErrors: FieldErrors = { matricule: '', password: '' };
+        let valid = true;
+        if (!data.matricule.trim()) {
+            newErrors.matricule = 'Veuillez saisir votre matricule';
+            valid = false;
+        } else if (data.matricule.trim().length < 3) {
+            newErrors.matricule = 'Matricule trop court (min. 3 caractères)';
+            valid = false;
+        }
+        if (!data.password.trim()) {
+            newErrors.password = 'Veuillez saisir votre mot de passe';
+            valid = false;
+        } else if (data.password.length < 4) {
+            newErrors.password = 'Mot de passe trop court (min. 4 caractères)';
+            valid = false;
+        }
+        setClientErrors(newErrors);
+        return valid;
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (!validate()) {
+            addToast('Veuillez corriger les erreurs du formulaire', 'error');
+            return;
+        }
         post('/login', {
             onSuccess: () => {
                 reset();
+                addToast('Connexion réussie.', 'success');
+            },
+            onError: () => {
+                addToast('Matricule ou mot de passe incorrect.', 'error');
             },
         });
     };
 
+    const handleReportProblem = (): void => {
+        addToast("Votre demande a été transmise à l'administrateur", 'success');
+    };
+
+    const clearFieldError = (field: 'matricule' | 'password'): void => {
+        setClientErrors((prev) => ({ ...prev, [field]: '' }));
+    };
+
     return (
-        <div className="relative min-h-screen overflow-hidden">
-          {/* Image de fond */}
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/Login_BG_Light.jpg')" }}
-            aria-hidden="true"
-          />
+        <>
+            <Head title="Connexion — SONARA" />
+            <ToastContainer />
 
-          {/* Voile blanc translucide */}
-          <div
-            className="absolute inset-0 bg-white/75"
-            aria-hidden="true"
-          />
-
-          {/* Contenu de la page */}
-          <div className="relative z-10">
-            <main className="min-h-screen bg-white lg:grid lg:grid-cols-[59.375%_40.625%]">
-                {/* Panneau gauche : identité SONARA */}
-                <section className="relative hidden min-h-screen overflow-hidden bg-white lg:flex lg:flex-col lg:items-center lg:justify-center">
-                    {/* Motif de fond */}
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-0 opacity-[0.08]"
-                        style={{
-                            backgroundImage:
-                                "linear-gradient(135deg, #044E9B 1px, transparent 1px), linear-gradient(45deg, #009632 1px, transparent 1px)",
-                            backgroundSize: "38px 38px",
-                        }}
-                    />
-
-                    {/* Formes décoratives */}
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[30%] top-[10%] size-[150px] bg-[#044E9B]/50"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[23%] top-[3%] size-[75px] bg-[#009632]/50"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[14%] top-[14%] size-[50px] bg-[#044E9B]/50"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[60%] top-[27%] size-[75px] bg-[#009632]/50"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[70%] top-[21%] size-[50px] bg-[#044E9B]/50"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="absolute left-[21%] top-[11%] size-5 bg-[#009632]/20"
-                    />
-
-                    {/* Logo */}
-                    <div className="relative z-10 flex flex-col items-center">
-                        <div className="flex size-40 items-center justify-center bg-[#044E9B]/10 p-5">
-                            <img
-                                src="/images/SONARA_Logo.png"
-                                alt="SONARA"
-                                className="h-full w-full object-contain"
+            <div className="login-page">
+                {/* Panneau gauche — identité SONARA */}
+                <div className="left-panel">
+                    <div className={`left-bg ${a}`} aria-hidden="true" />
+                    <div className="left-overlay" aria-hidden="true" />
+                    <div className="left-content">
+                        <div className={`logo-cluster ${a}`}>
+                            <div
+                                className={`deco deco-mint-small ${a}`}
+                                aria-hidden="true"
                             />
+                            <div
+                                className={`deco deco-green-top ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={`deco deco-blue-medium ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={`deco deco-blue-base ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={`deco deco-blue-small-right ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={`deco deco-green-large ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={`deco deco-mint-tiny ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div className={`logo-card ${a}`}>
+                                <img
+                                    src="/assets/SONARA_Logo.png"
+                                    alt="SONARA - Fueling ambitions"
+                                    width={126}
+                                    height={126}
+                                />
+                            </div>
                         </div>
-
-                        <h1 className="mt-16 text-center text-3xl font-bold uppercase tracking-wide text-[#044E9B] xl:text-4xl">
-                            Bon retour à la SONARA
+                        <h1 className={`welcome-title ${a}`}>
+                            <span>BIENVENUE À LA</span>
+                            <span>SONARA</span>
                         </h1>
-
-                        <p className="mt-8 max-w-xl px-8 text-center text-base leading-relaxed text-gray-700">
-                            Pour avoir accès à votre portail, nous vous prions de
-                            vous connecter à votre compte au moyen de votre
+                        <p className={`welcome-desc ${a}`}>
+                            Pour avoir accès à votre portail, nous vous prions
+                            de vous connecter à votre compte au moyen de votre
                             matricule et de votre mot de passe.
                         </p>
                     </div>
+                </div>
 
-                    <span className="absolute bottom-6 text-xs tracking-widest text-gray-400">
-                        SONARA · PORTAIL DU PERSONNEL
-                    </span>
-                </section>
+                {/* Diviseur vert */}
+                <div className={`green-divider ${a}`} aria-hidden="true" />
 
-                {/* Panneau droit : connexion */}
-                <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#044E9B] px-5 py-10 text-white sm:px-10">
-                    {/* Bande verte de la maquette */}
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-y-0 right-0 w-[14%] bg-[#009632]"
-                    />
-                    <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-y-0 right-0 w-[90%] bg-[#044E9B] shadow-[-20px_0_50px_rgba(0,0,0,0.12)]"
-                    />
-
-                    <div className="relative z-10 flex w-full max-w-[380px] flex-col items-center">
-                        {/* Avatar */}
-                        <div className="relative z-20 mb-[-25px] flex size-[120px] items-center justify-center rounded-t-[25px] bg-white shadow-[0_4px_20px_5px_rgba(0,0,0,0.25)]">
-                            <div className="flex size-[84px] items-center justify-center rounded-full bg-[#044E9B]/10 text-[#044E9B]">
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.4"
-                                    className="size-14"
-                                    aria-hidden="true"
-                                >
-                                    <circle cx="12" cy="8" r="4" />
-                                    <path d="M4 21v-2a8 8 0 0 1 16 0v2z" />
-                                </svg>
-                            </div>
+                {/* Panneau droit — formulaire de connexion */}
+                <div className={`right-panel ${a}`}>
+                    <div className="right-inner">
+                        {/* Carte avatar */}
+                        <div className={`avatar-card ${a}`} aria-hidden="true">
+                            <span
+                                className="material-symbols-outlined avatar-material"
+                                aria-hidden="true"
+                            >
+                                person
+                            </span>
                         </div>
 
-                        {/* Formulaire */}
+                        {/* Formulaire de connexion */}
                         <form
+                            className={`login-card ${a}`}
                             onSubmit={handleSubmit}
-                            className="w-full rounded-[25px] border border-white bg-[#044E9B] px-7 pb-8 pt-12 shadow-[0_10px_20px_10px_rgba(0,0,0,0.25)] sm:px-10"
+                            noValidate
                         >
-                            <div className="space-y-5">
-                                <label className="block">
-                                    <span className="sr-only">Matricule</span>
-                                    <input
-                                        type="text"
-                                        name="matricule"
-                                        autoComplete="username"
-                                        required
-                                        value={data.matricule}
-                                        onChange={(event) =>
-                                            setData('matricule', event.target.value)
+                            {/* Champ matricule */}
+                            <div className={`input-group ${a}`}>
+                                <input
+                                    type="text"
+                                    className={`input-field ${errors.matricule || clientErrors.matricule ? 'has-error' : ''}`}
+                                    placeholder="Matricule"
+                                    value={data.matricule}
+                                    onChange={(event) => {
+                                        setData(
+                                            'matricule',
+                                            event.target.value,
+                                        );
+                                        if (clientErrors.matricule) {
+                                            clearFieldError('matricule');
                                         }
-                                        placeholder="Matricule"
-                                        className={`
-                                            h-11 w-full rounded-[10px] border border-white bg-white/[0.02] px-5 text-sm text-white
-                                            shadow-[0_4px_10px_rgba(0,0,0,0.25)] outline-none transition
-                                            placeholder:text-white/90 focus:border-[#8bd9a5] focus:ring-2 focus:ring-[#8bd9a5]/30
-                                            ${errors.matricule ? 'border-red-500' : ''}
-                                        `}
-                                    />
-                                    {errors.matricule && (
-                                        <p className="mt-1 text-sm text-red-400">
-                                            {errors.matricule}
-                                        </p>
-                                    )}
-                                </label>
+                                    }}
+                                    autoComplete="username"
+                                    aria-label="Matricule"
+                                    aria-invalid={
+                                        !!(
+                                            errors.matricule ||
+                                            clientErrors.matricule
+                                        )
+                                    }
+                                />
+                                {(errors.matricule ||
+                                    clientErrors.matricule) && (
+                                    <div className="error-msg">
+                                        <span
+                                            className="material-symbols-outlined error-material"
+                                            aria-hidden="true"
+                                        >
+                                            error
+                                        </span>
+                                        {errors.matricule ||
+                                            clientErrors.matricule}
+                                    </div>
+                                )}
+                            </div>
 
-                                <label className="relative block">
-                                    <span className="sr-only">Mot de passe</span>
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        name="password"
-                                        autoComplete="current-password"
-                                        required
-                                        value={data.password}
-                                        onChange={(event) =>
-                                            setData('password', event.target.value)
+                            {/* Champ mot de passe */}
+                            <div className={`input-group ${a}`}>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    className={`input-field ${errors.password || clientErrors.password ? 'has-error' : ''}`}
+                                    placeholder="Mot de passe"
+                                    value={data.password}
+                                    onChange={(event) => {
+                                        setData('password', event.target.value);
+                                        if (clientErrors.password) {
+                                            clearFieldError('password');
                                         }
-                                        placeholder="Mot de passe"
-                                        className={`
-                                            h-11 w-full rounded-[10px] border border-white bg-white/[0.02] px-5 pr-12 text-sm text-white
-                                            shadow-[0_4px_10px_rgba(0,0,0,0.25)] outline-none transition
-                                            placeholder:text-white/90 focus:border-[#8bd9a5] focus:ring-2 focus:ring-[#8bd9a5]/30
-                                            ${errors.password ? 'border-red-500' : ''}
-                                        `}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        aria-label={
-                                            showPassword
-                                                ? "Masquer le mot de passe"
-                                                : "Afficher le mot de passe"
-                                        }
-                                        aria-pressed={showPassword}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-white/90 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                                    }}
+                                    autoComplete="current-password"
+                                    aria-label="Mot de passe"
+                                    aria-invalid={
+                                        !!(
+                                            errors.password ||
+                                            clientErrors.password
+                                        )
+                                    }
+                                    style={{ paddingRight: '48px' }}
+                                />
+                                <button
+                                    type="button"
+                                    className="eye-btn"
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                    aria-label={
+                                        showPassword ? 'Masquer' : 'Afficher'
+                                    }
+                                >
+                                    <span
+                                        className="material-symbols-outlined eye-material"
+                                        aria-hidden="true"
                                     >
-                                        {showPassword ? (
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1.7"
-                                                className="size-5"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8" />
-                                                <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7a12 12 0 0 1-3.1 4.1M6.2 6.2C3.9 7.8 2.7 10 2.5 12c.5 1.3 1.5 2.8 3.2 4.2A10 10 0 0 0 12 19a9 9 0 0 0 2-.2" />
-                                            </svg>
-                                        ) : (
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1.7"
-                                                className="size-5"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z" />
-                                                <circle cx="12" cy="12" r="3" />
-                                            </svg>
-                                        )}
-                                    </button>
-                                    {errors.password && (
-                                        <p className="mt-1 text-sm text-red-400">
-                                            {errors.password}
-                                        </p>
-                                    )}
-                                </label>
+                                        {showPassword
+                                            ? 'visibility_off'
+                                            : 'visibility'}
+                                    </span>
+                                </button>
+                                {(errors.password || clientErrors.password) && (
+                                    <div className="error-msg">
+                                        <span
+                                            className="material-symbols-outlined error-material"
+                                            aria-hidden="true"
+                                        >
+                                            error
+                                        </span>
+                                        {errors.password ||
+                                            clientErrors.password}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Bouton de connexion */}
                             <button
                                 type="submit"
+                                className={`btn-connect ${a}`}
                                 disabled={processing}
-                                className={`
-                                    mt-8 flex h-16 w-full items-center overflow-hidden rounded-[15px] bg-[#009632] text-white
-                                    shadow-[0_4px_10px_rgba(0,0,0,0.25)] transition hover:bg-[#00852d] active:scale-[0.99]
-                                    ${processing ? 'cursor-not-allowed opacity-70' : ''}
-                                `}
                             >
-                                <span className="flex h-[calc(100%-10px)] w-[75px] shrink-0 items-center justify-center rounded-[10px] bg-black/20">
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.8"
-                                        className="size-6"
-                                        aria-hidden="true"
-                                    >
-                                        <path d="M10 17l5-5-5-5" />
-                                        <path d="M15 12H3" />
-                                        <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6" />
-                                    </svg>
+                                <span
+                                    className="btn-icon-box"
+                                    aria-hidden="true"
+                                >
+                                    {processing ? (
+                                        <span className="spinner" />
+                                    ) : (
+                                        <span
+                                            className="material-symbols-outlined btn-icon-material"
+                                            aria-hidden="true"
+                                        >
+                                            login
+                                        </span>
+                                    )}
                                 </span>
-
-                                <span className="flex-1 px-1 text-center text-lg font-medium sm:text-xl">
-                                    {processing ? 'Connexion en cours...' : 'Je me connecte'}
+                                <span className="btn-text">
+                                    {processing
+                                        ? 'Connexion...'
+                                        : 'Je me connecte'}
                                 </span>
                             </button>
                         </form>
 
-                        {/* Assistance */}
-                        <div className="mt-7 w-full">
-                            <div className="h-px w-full bg-white/50" />
-
-                            <p className="mx-auto mt-7 max-w-[330px] text-center text-sm leading-relaxed text-white">
-                                Vous ne parvenez pas à vous connecter ? Cliquez
-                                ci-dessous pour contacter l’administrateur.
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    // Ajouter ici le lien ou le mécanisme de contact.
-                                }}
-                                className="mt-5 flex min-h-[50px] w-full items-center justify-center gap-3 rounded-full border border-white px-4 text-sm text-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                            >
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.7"
-                                    className="size-5 shrink-0"
-                                    aria-hidden="true"
+                        {/* Zone basse — aide + signaler un problème */}
+                        <div className={`bottom-area ${a}`}>
+                            <div
+                                className={`divider ${a}`}
+                                aria-hidden="true"
+                            />
+                            <div className="bottom-row">
+                                <p className={`help-text ${a}`}>
+                                    Vous ne parvenez pas à vous connecter ?
+                                    Cliquez ci-dessous pour contacter
+                                    l'administrateur.
+                                </p>
+                                <button
+                                    type="button"
+                                    className={`btn-problem ${a}`}
+                                    onClick={handleReportProblem}
                                 >
-                                    <path d="M4 21V5a2 2 0 0 1 2-2h12l-3 5 3 5H6" />
-                                </svg>
-                                Signaler un problème
-                            </button>
+                                    <span
+                                        className="material-symbols-outlined flag-material"
+                                        aria-hidden="true"
+                                    >
+                                        flag
+                                    </span>
+                                    Signaler un problème
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                    <span className="relative z-10 mt-8 text-center text-xs text-white/60 lg:hidden">
-                        SONARA · PORTAIL DU PERSONNEL
-                    </span>
-                </section>
-            </main>
-
-          </div>
-        </div>
+                </div>
+            </div>
+        </>
     );
 }

@@ -69,8 +69,11 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'email' => 'admin@example.com',
             'matricule' => 100001,
+            'phone' => '+237 6 91 00 00 01',
             'first_name' => 'Admin',
             'last_name' => 'Système',
+            'date_naissance' => '1980-01-15',
+            'lieu_naissance' => 'Douala',
             'role' => 'admin',
             'department_id' => $production->id,
         ]);
@@ -78,8 +81,11 @@ class DatabaseSeeder extends Seeder
         $rh = User::factory()->create([
             'email' => 'rh@example.com',
             'matricule' => 100002,
+            'phone' => '+237 6 91 00 00 02',
             'first_name' => 'RH',
             'last_name' => 'Département',
+            'date_naissance' => '1985-06-20',
+            'lieu_naissance' => 'Yaoundé',
             'role' => 'rh',
             'department_id' => $maintenance->id,
         ]);
@@ -87,8 +93,11 @@ class DatabaseSeeder extends Seeder
         $manager = User::factory()->create([
             'email' => 'manager@example.com',
             'matricule' => 100003,
+            'phone' => '+237 6 91 00 00 03',
             'first_name' => 'Marie',
             'last_name' => 'Manager',
+            'date_naissance' => '1978-03-10',
+            'lieu_naissance' => 'Bafoussam',
             'role' => 'manager',
             'department_id' => $atelierA->id,
         ]);
@@ -96,8 +105,11 @@ class DatabaseSeeder extends Seeder
         $employee1 = User::factory()->create([
             'email' => 'employe1@example.com',
             'matricule' => 100004,
+            'phone' => '+237 6 91 00 00 04',
             'first_name' => 'Jean',
             'last_name' => 'Employé',
+            'date_naissance' => '1990-09-05',
+            'lieu_naissance' => 'Garoua',
             'role' => 'employee',
             'department_id' => $atelierA->id,
             'manager_id' => $manager->id,
@@ -106,8 +118,11 @@ class DatabaseSeeder extends Seeder
         $employee2 = User::factory()->create([
             'email' => 'employe2@example.com',
             'matricule' => 100005,
+            'phone' => '+237 6 91 00 00 05',
             'first_name' => 'Sophie',
             'last_name' => 'Employée',
+            'date_naissance' => '1992-11-25',
+            'lieu_naissance' => 'Ngaoundéré',
             'role' => 'employee',
             'department_id' => $electricite->id,
             'manager_id' => $manager->id,

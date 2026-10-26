@@ -1,0 +1,919 @@
+/* ========== Nouvelle Demande ========== */
+@keyframes dashCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nd-root {
+    min-height: 100vh;
+    position: relative;
+    background: #eef2f7;
+    font-family: 'Trebuchet MS', 'Trebuchet', 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Back button mobile */
+.nd-back-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.nd-back-btn .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* Topbar persistante (navbar) */
+.nd-root .dash-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.nd-root .dash-green-line {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+}
+.nd-retour-pill {
+    grid-column: 1 / -1;
+    justify-self: start;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    background: #0e4a90;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+    margin-bottom: 2px;
+    opacity: 0;
+    transform: translateY(8px);
+}
+.nd-retour-pill.animated {
+    animation: dashCardIn 0.45s ease-out forwards;
+}
+.nd-retour-pill .material-symbols-outlined {
+    font-size: 18px;
+}
+.nd-retour-pill:hover {
+    background: #0c3d7a;
+    transform: translateY(-1px);
+}
+
+.nd-bg {
+    inset: 70px 0 0 0;
+    z-index: 0;
+}
+.nd-bg-img {
+    position: absolute;
+    inset: 0;
+    background: url('/assets/Sonara_BG.webp') center 30% / cover no-repeat;
+    opacity: 0.95;
+}
+.nd-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(1px);
+}
+
+/* Main layout: left intro + right card */
+.nd-main {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 88px 22px 32px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+/* Left */
+.nd-left {
+    padding: 18px 8px 0 12px;
+    opacity: 0;
+    transform: translateY(14px);
+}
+.nd-left.animated {
+    animation: dashCardIn 0.6s ease-out forwards;
+}
+
+.nd-title {
+    font-family: 'Bauhaus 93', 'Trebuchet MS', sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: #0e4a90;
+    line-height: 0.95;
+    letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.nd-title span {
+    display: block;
+}
+
+.nd-desc {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+/* Card */
+.nd-card {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 22px 20px 18px;
+    opacity: 0;
+    transform: translateY(16px);
+}
+.nd-card.animated {
+    animation: dashCardIn 0.6s ease-out forwards;
+    animation-delay: 0.14s;
+}
+
+.nd-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.nd-col {
+    padding: 4px 16px;
+}
+.nd-col-left {
+    padding-right: 18px;
+}
+.nd-col-right {
+    padding-left: 18px;
+    border-left: 1px solid #eef2f7;
+}
+
+/* Fields */
+.nd-field {
+    margin-bottom: 16px;
+}
+.nd-field:last-child {
+    margin-bottom: 0;
+}
+
+.nd-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a2a3a;
+    margin-bottom: 7px;
+    line-height: 1.35;
+}
+.nd-req {
+    color: #e23c3c;
+    margin-left: 2px;
+}
+
+/* Select */
+.nd-select-wrap {
+    position: relative;
+}
+.nd-select {
+    width: 100%;
+    height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    padding: 0 36px 0 12px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s;
+}
+.nd-select:focus {
+    border-color: #0e4a90;
+}
+.nd-select:invalid,
+.nd-select[value=''] {
+    color: #8a98aa;
+}
+.nd-select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #5a6a7a;
+    font-size: 20px;
+}
+
+/* Textarea */
+.nd-textarea {
+    width: 100%;
+    min-height: 110px;
+    border-radius: 12px;
+    border: 1.5px solid #dbe2ea;
+    padding: 10px 12px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.18s;
+}
+.nd-textarea::placeholder {
+    color: #8a98aa;
+}
+.nd-textarea:focus {
+    border-color: #0e4a90;
+}
+
+/* Phones — flexibles : W sans X, W - X avec X (total = W = bouton Ajouter) */
+.nd-phones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.nd-phone-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+.nd-phone-input-wrap {
+    flex: 1;
+    min-width: 0;
+}
+.nd-phone-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    height: 42px;
+    transition: border-color 0.18s;
+}
+.nd-phone-input-wrap:focus-within {
+    border-color: #0e4a90;
+}
+
+.nd-phone-prefix {
+    display: grid;
+    place-items: center;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5a6a7a;
+    background: #f4f7fb;
+    border-right: 1px solid #e6eaf0;
+    white-space: nowrap;
+}
+.nd-phone-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 13px;
+    color: #1a2a3a;
+    min-width: 0;
+}
+.nd-phone-input::placeholder {
+    color: #8a98aa;
+    letter-spacing: 0.3px;
+}
+
+.nd-phone-operator {
+    width: 68px;
+    background: #0e4a90;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.nd-phone-operator .material-symbols-outlined {
+    font-size: 22px;
+}
+.nd-phone-operator.has-op {
+    background: #fff;
+    padding: 0;
+}
+.nd-op-logo {
+    width: 56px;
+    height: 28px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 6px;
+    padding: 2px 4px;
+}
+.nd-op-logo.fill {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #fff;
+    border-radius: 0 9px 9px 0;
+    padding: 0;
+    display: block;
+}
+
+.nd-phone-remove {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid #e6eaf0;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: #7a8696;
+    flex-shrink: 0;
+}
+.nd-phone-remove .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.nd-add-phone {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a2a3a;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.nd-add-phone:hover {
+    border-color: #0e4a90;
+    background: #f0f5ff;
+}
+.nd-add-phone .material-symbols-outlined {
+    font-size: 18px;
+    color: #0e4a90;
+}
+
+.nd-hint {
+    font-size: 11px;
+    color: #8a7a00;
+    background: #fff8d6;
+    border: 1px solid #ffe99a;
+    border-radius: 8px;
+    padding: 6px 8px;
+    line-height: 1.35;
+}
+
+/* Date */
+.nd-date-wrap {
+    position: relative;
+    height: 42px;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.nd-date-display {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    color: #1a2a3a;
+    background: transparent;
+    cursor: pointer;
+}
+.nd-date-native {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+.nd-date-native::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.nd-date-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0e4a90;
+    pointer-events: none;
+    font-size: 20px;
+    background: #fff;
+    padding-left: 6px;
+}
+
+/* Periode / Quart chips */
+.nd-row-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.nd-row-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #5a6a7a;
+    min-width: 48px;
+}
+.nd-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.nd-chip {
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a2a3a;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.nd-chip:hover {
+    border-color: #0e4a90;
+}
+.nd-chip.active {
+    background: #eef4ff;
+    border-color: #0e4a90;
+    color: #0e4a90;
+}
+.nd-chip.active.green {
+    background: #0fa84e;
+    border-color: #0fa84e;
+    color: #fff;
+}
+.nd-chip .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.nd-or {
+    text-align: center;
+    font-size: 11px;
+    color: #8a98aa;
+    margin: 6px 0;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Bottom */
+.nd-bottom {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #eef2f7;
+}
+.nd-bottom-text {
+    font-size: 11.5px;
+    color: #5a6a7a;
+    line-height: 1.45;
+    margin-bottom: 12px;
+}
+.nd-actions {
+    display: flex;
+    gap: 10px;
+}
+.nd-btn {
+    flex: 1;
+    height: 42px;
+    border-radius: 999px;
+    border: none;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.nd-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+.nd-btn-draft {
+    background: #0e4a90;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(14, 74, 144, 0.18);
+}
+.nd-btn-draft:hover {
+    background: #0c3d7a;
+    transform: translateY(-1px);
+}
+.nd-btn-submit {
+    background: #0fa84e;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(15, 168, 78, 0.22);
+}
+.nd-btn-submit:hover {
+    background: #0e9d49;
+    transform: translateY(-1px);
+}
+.nd-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* User pill in topbar (for ND) */
+.nd-user-pill {
+    height: 38px;
+    padding: 0 4px 0 14px;
+    gap: 8px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Trebuchet MS', sans-serif;
+    transition: all 0.18s;
+}
+.nd-user-pill:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+.nd-user-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.nd-user-avatar {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #000;
+    flex-shrink: 0;
+}
+.nd-user-avatar .material-symbols-outlined {
+    font-size: 18px;
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+    .nd-main {
+        grid-template-columns: 280px 1fr;
+        gap: 16px;
+    }
+    .nd-title {
+        font-size: 30px;
+    }
+}
+@media (max-width: 860px) {
+    .nd-main {
+        grid-template-columns: 1fr;
+        max-width: 640px;
+    }
+    .nd-left {
+        padding: 8px 4px 0;
+    }
+    .nd-title {
+        font-size: 28px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .nd-desc {
+        max-width: 100%;
+    }
+    .nd-card-grid {
+        grid-template-columns: 1fr;
+    }
+    .nd-col-left {
+        padding-right: 16px;
+        border-bottom: 1px solid #eef2f7;
+        padding-bottom: 16px;
+        margin-bottom: 4px;
+    }
+    .nd-col-right {
+        border-left: none;
+        padding-left: 16px;
+        padding-top: 12px;
+    }
+}
+.nd-retour-pill {
+    grid-column: 1 / -1;
+}
+@media (max-width: 860px) {
+    .nd-retour-pill {
+        display: none;
+    }
+    .nd-root .dash-topbar {
+        padding: 0 10px;
+    }
+    .nd-root .dash-topbar-right.nd-desktop-nav {
+        display: none !important;
+    }
+    .nd-root .dash-topbar-burger {
+        display: grid !important;
+    }
+    .nd-back-btn {
+        display: grid;
+    }
+    .nd-root .dash-icon-btn {
+        width: 34px;
+        height: 34px;
+    }
+    .nd-user-pill {
+        padding: 0 3px 0 10px !important;
+    }
+    .nd-user-name {
+        display: none;
+    }
+    .nd-phones-desktop {
+        display: none !important;
+    }
+    .nd-phones-mobile {
+        display: block !important;
+    }
+    .nd-bottom {
+        display: none !important;
+    }
+    .nd-fabs {
+        display: flex !important;
+    }
+    .nd-card-grid {
+        gap: 0;
+    }
+}
+@media (max-width: 560px) {
+    .nd-main {
+        padding: 72px 12px 20px;
+    }
+    .nd-card {
+        border-radius: 18px;
+        padding: 16px 14px 14px;
+    }
+    .nd-actions {
+        flex-direction: column;
+    }
+    .nd-btn {
+        width: 100%;
+    }
+    .nd-root .dash-topbar {
+        height: 56px;
+    }
+    .nd-root .dash-green-line {
+        top: 56px;
+    }
+    .nd-bg {
+        inset: 62px 0 0 0;
+    }
+    .nd-title {
+        font-size: 24px;
+    }
+}
+.nd-date-error {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #c0392b;
+    background: #fdecea;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    padding: 5px 8px;
+    line-height: 1.3;
+}
+
+/* Phones mobile/desktop switch */
+.nd-phones-desktop {
+    display: block;
+}
+.nd-phones-mobile {
+    display: none;
+}
+.nd-modifier-btn {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1a2a3a;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.nd-modifier-btn:hover {
+    border-color: #0e4a90;
+    background: #f0f5ff;
+}
+.nd-modifier-btn .material-symbols-outlined {
+    font-size: 20px;
+    color: #0e4a90;
+}
+.nd-phone-summary {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #0fa84e;
+    font-weight: 600;
+}
+
+/* FAB mobile - dual */
+.nd-fabs {
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 40;
+    align-items: center;
+}
+.nd-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    color: #fff;
+    border: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.18),
+        0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s;
+}
+.nd-fab:hover {
+    transform: scale(1.05);
+}
+.nd-fab .material-symbols-outlined {
+    font-size: 26px;
+}
+.nd-fab--draft {
+    background: #0e4a90;
+    box-shadow: 0 8px 24px rgba(14, 74, 144, 0.32);
+}
+.nd-fab--draft:hover {
+    background: #0c3d7a;
+}
+.nd-fab--submit {
+    background: #0fa84e;
+    box-shadow: 0 8px 24px rgba(15, 168, 78, 0.38);
+}
+.nd-fab--submit:hover {
+    background: #0e9d49;
+}
+
+/* Modal */
+.nd-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 20, 35, 0.42);
+    backdrop-filter: blur(2px);
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    animation: ndModalIn 0.28s ease-out;
+}
+.nd-modal {
+    background: #fff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px 20px;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+.nd-modal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 1.5px solid #0e4a90;
+    display: grid;
+    place-items: center;
+    color: #0e4a90;
+    margin: 0 auto;
+}
+.nd-modal-icon .material-symbols-outlined {
+    font-size: 26px;
+}
+.nd-modal-title {
+    text-align: center;
+    font-family: 'Bauhaus 93', sans-serif;
+    font-size: 16px;
+    color: #0e4a90;
+    font-weight: 400;
+}
+.nd-modal-desc {
+    text-align: center;
+    font-size: 11.5px;
+    color: #5a6a7a;
+    line-height: 1.4;
+}
+.nd-modal-phones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+}
+.nd-modal-save {
+    margin-top: 6px;
+    height: 44px;
+    border-radius: 999px;
+    border: none;
+    background: #0e4a90;
+    color: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14, 74, 144, 0.22);
+}
+.nd-modal-save .material-symbols-outlined {
+    font-size: 18px;
+}
+.nd-modal-cancel {
+    height: 44px;
+    border-radius: 999px;
+    border: 1.5px solid #dbe2ea;
+    background: #fff;
+    color: #1a2a3a;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.nd-modal-cancel .material-symbols-outlined {
+    font-size: 18px;
+}
+@keyframes ndModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
