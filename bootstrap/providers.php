@@ -1,7 +1,7 @@
 <?php
 
 use App\Providers\AppServiceProvider;
-use Illuminate\Auth\AuthServiceProvider;
+use App\Providers\AuthServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 
 return [

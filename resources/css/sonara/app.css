@@ -48,7 +48,7 @@
 .left-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.84);
+    background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(1px);
     z-index: 1;
 }
@@ -281,7 +281,7 @@
     padding: 36px 34px 56px;
     position: relative;
     min-height: 100vh;
-    opacity: 0;
+    opacity: 1;
     transform: translateX(36px);
     will-change: transform, opacity;
 }
@@ -559,7 +559,7 @@
     letter-spacing: 0.1px;
     position: relative;
     overflow: hidden;
-    opacity: 0;
+    opacity: 1;
     transform: translateY(12px);
     will-change: transform, opacity;
 }
@@ -877,7 +877,7 @@
 
 @keyframes fadeInUp {
     from {
-        opacity: 0;
+        opacity: 1;
         transform: translateY(18px);
     }
     to {
@@ -897,7 +897,7 @@
 
 @keyframes slideInRight {
     from {
-        opacity: 0;
+        opacity: 1;
         transform: translateX(36px);
     }
     to {

@@ -1,0 +1,65 @@
+/* ======================================================
+   SONARA — Historique (spécifique)
+   Layout commun et dialogs sont dans styles/base.css + components.css
+   ====================================================== */
+.hist-root .dash-icon-btn-active { background: rgba(255,255,255,0.28); }
+
+.hist-card { padding: 18px 18px 16px; opacity: 0; transform: translateY(16px); }
+.hist-card.animated { animation: dashCardIn 0.6s ease-out forwards; animation-delay: 0.14s; }
+
+.hist-header { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.hist-title { font-family: var(--font-display); font-size: 18px; font-weight: 400; color: var(--sonara-blue); letter-spacing: 0.5px; text-transform: uppercase; }
+.hist-subtitle { font-size: 11.5px; color: #6a7a8a; margin-top: 4px; line-height: 1.4; max-width: 560px; }
+.hist-header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.hist-icon-btn { width: 38px; height: 38px; border-radius: var(--radius-pill); border: 1.5px solid var(--sonara-border); background: #fff; display: grid; place-items: center; cursor: pointer; transition: all 0.18s; }
+.hist-icon-btn:hover { border-color: var(--sonara-blue); background: #f0f5ff; }
+.hist-icon-btn .material-symbols-outlined { font-size: 18px; color: var(--sonara-text); }
+
+.hist-search-wrap { display: flex; align-items: center; border: 1.5px solid var(--sonara-border); border-radius: var(--radius-input); overflow: hidden; background: #fff; height: 38px; width: 100%; flex: 1; max-width: none; margin-bottom: 14px; }
+.hist-search-filter { position: relative; display: flex; align-items: center; background: #eef2f7; border-right: 1px solid var(--sonara-border); padding: 0 28px 0 10px; height: 100%; flex-shrink: 0; }
+.hist-search-filter select { appearance: none; background: transparent; border: none; outline: none; font-family: var(--font-body); font-size: 12px; font-weight: 700; color: var(--sonara-text); cursor: pointer; padding-right: 4px; }
+.hist-search-filter .material-symbols-outlined { position: absolute; right: 8px; font-size: 18px; color: var(--sonara-text-muted); pointer-events: none; }
+.hist-search-wrap input { flex: 1; border: none; outline: none; padding: 0 10px; font-family: var(--font-body); font-size: 12.5px; color: var(--sonara-text); min-width: 0; }
+.hist-search-wrap input::placeholder { color: var(--sonara-text-light); }
+.hist-search-btn { width: 38px; height: 36px; border: none; border-left: 1px solid var(--sonara-border); background: #fff; display: grid; place-items: center; cursor: pointer; flex-shrink: 0; }
+.hist-search-btn .material-symbols-outlined { font-size: 18px; color: var(--sonara-text); }
+
+.hist-table-wrap { border: 1px solid var(--sonara-border-light); border-radius: var(--radius-input); overflow: hidden; background: #fff; position: relative; max-height: 380px; overflow-y: auto; overflow-x: hidden; }
+.hist-table-wrap::after { content: ""; position: sticky; bottom: 0; left: 0; right: 0; height: 24px; display: block; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.95)); pointer-events: none; margin-top: -24px; }
+.hist-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+.hist-table thead th { background: #eef2f7; font-size: 11.5px; font-weight: 700; color: var(--sonara-text); text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--sonara-border-light); white-space: nowrap; }
+.hist-table tbody td { padding: 10px 12px; font-size: 12.5px; color: var(--sonara-text); border-bottom: 1px solid var(--sonara-border-card); vertical-align: middle; }
+.hist-table tbody tr:last-child td { border-bottom: none; }
+.hist-table tbody tr:hover { filter: brightness(0.98); }
+
+/* Couleurs d'état (maquette) */
+.hist-table tbody tr.row-attente { background: var(--sonara-attente-bg); }
+.hist-table tbody tr.row-ok { background: var(--sonara-ok-bg); }
+.hist-table tbody tr.row-ko { background: var(--sonara-ko-bg); }
+.hist-td-num { font-weight: 700; color: #37474f; width: 54px; white-space: nowrap; vertical-align: middle; text-align: left; padding-left: 14px !important; }
+.hist-num-wrap { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; line-height: 1; }
+.hist-td-nature { font-weight: 500; }
+.hist-td-date { white-space: nowrap; }
+.hist-date-main { display: block; font-size: 12.5px; font-weight: 600; color: var(--sonara-text); }
+.hist-date-sub { display: block; font-size: 11px; color: var(--sonara-text-light); margin-top: 2px; }
+.hist-td-etat { font-weight: 700; white-space: nowrap; font-size: 12.5px; letter-spacing: 0.1px; }
+.hist-table tbody td.statut-attente { color: #f39c12 !important; }
+.hist-table tbody td.statut-ok { color: var(--sonara-ok-text) !important; }
+.hist-table tbody td.statut-ko { color: var(--sonara-ko-text) !important; }
+.hist-td-icon { width: 36px; text-align: center; }
+.hist-td-icon .material-symbols-outlined { font-size: 20px; }
+.icon-attente { color: #d48a00; }
+.icon-ok { color: var(--sonara-ok-text); }
+.icon-ko { color: var(--sonara-red); }
+.hist-empty { text-align: center; padding: 18px; color: var(--sonara-text-light); font-size: 12.5px; }
+
+@media (max-width: 860px) {
+  .hist-card { padding: 14px 12px 12px; }
+  .hist-table thead th { font-size: 11px; padding: 8px 8px; }
+  .hist-table tbody td { padding: 8px 8px; font-size: 11.5px; }
+}
+@media (max-width: 560px) {
+  .hist-header { flex-direction: column; }
+  .hist-table-wrap { overflow-x: auto; }
+  .hist-table { min-width: 540px; }
+}

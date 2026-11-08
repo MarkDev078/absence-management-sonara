@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Middleware\HandleInertiaRequests;
-use Illuminate\Auth\AuthServiceProvider;
+use App\Providers\AuthServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

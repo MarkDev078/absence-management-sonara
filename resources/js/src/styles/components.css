@@ -1,0 +1,86 @@
+/* ======================================================
+   SONARA — Composants UI partagés
+   Toasts, dialogs, FAB, menus, notifications
+   ====================================================== */
+
+/* ---------- Toasts ---------- */
+.toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast { background: #fff; color: #1a1a1a; padding: 14px 16px 14px 20px; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; min-width: 280px; max-width: 420px; pointer-events: auto; animation: toastIn 0.45s cubic-bezier(0.16, 1, 0.3, 1); border-left: 4px solid var(--sonara-green-alt); font-family: var(--font-body); position: relative; }
+.toast.error { border-left-color: #E53E3E; }
+.toast-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.toast.success .toast-icon { background: #E6F7EB; color: var(--sonara-green-alt); }
+.toast.error .toast-icon { background: #FEE; color: #E53E3E; }
+.toast-close { margin-left: auto; width: 28px; height: 28px; border-radius: var(--radius-pill); border: 1px solid var(--sonara-border-light); background: #f4f7fb; color: #5a6a7a; display: grid; place-items: center; cursor: pointer; flex-shrink: 0; transition: all 0.18s; }
+.toast-close:hover { background: #e8eef7; color: var(--sonara-text); transform: scale(1.05); }
+.toast-close .material-symbols-outlined { font-size: 16px; }
+.toast-material { font-size: 20px; line-height: 1; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(28px) scale(0.96); } to { opacity: 1; transform: translateX(0) scale(1); } }
+
+/* ---------- Dialog AVERTISSEMENT / Déconnexion ---------- */
+.avert-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 16px; animation: fadeIn 0.2s; }
+.avert-dialog { background: #fff; width: 100%; max-width: 520px; border-radius: 18px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.28); animation: dashPopIn 0.28s ease-out; }
+.avert-header { background: linear-gradient(90deg, #fde4a6 0%, #f5a623 55%, #e69500 100%); height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #fff; position: relative; }
+.avert-header h2 { font-family: var(--font-display); font-size: 18px; font-weight: 400; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.18); }
+.avert-header .material-symbols-outlined { font-size: 24px; color: #fff; }
+.avert-body { padding: 18px 20px 14px; text-align: center; }
+.avert-body p { font-family: var(--font-body); font-size: 12.5px; color: var(--sonara-text); line-height: 1.45; }
+.avert-ask { margin-top: 14px; font-weight: 600; font-size: 12.5px; }
+.avert-footer { display: grid; grid-template-columns: 1fr 1fr; height: 48px; }
+.avert-btn { border: none; font-family: var(--font-body); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: filter 0.18s; }
+.avert-btn .material-symbols-outlined { font-size: 18px; }
+.avert-btn-danger { background: var(--sonara-red); color: #fff; }
+.avert-btn-danger:hover { filter: brightness(0.95); }
+.avert-btn-cancel { background: var(--sonara-border-light); color: var(--sonara-text); }
+.avert-btn-cancel:hover { background: #dbe2ea; }
+
+/* ---------- FAB ---------- */
+.dash-fab { position: fixed; right: 16px; bottom: 16px; width: 44px; height: 44px; border-radius: var(--radius-pill); background: var(--sonara-blue); color: #fff; border: none; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(0,0,0,0.22); cursor: pointer; z-index: 15; }
+.dash-fab .material-symbols-outlined { font-size: 20px; }
+
+/* ---------- Notifications popover ---------- */
+.dash-notif-pop { position: fixed; top: 76px; right: 18px; width: 340px; background: #fff; border-radius: 16px; box-shadow: var(--shadow-pop); border: 1px solid var(--sonara-border-light); z-index: 30; overflow: hidden; animation: dashPopIn 0.28s ease-out; }
+.dash-notif-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #eef2f7; font-family: var(--font-body); font-size: 13px; }
+.dash-notif-head button { width: 28px; height: 28px; border-radius: var(--radius-pill); border: none; background: #f4f7fb; display: grid; place-items: center; cursor: pointer; }
+.dash-notif-list { list-style: none; padding: 8px 0; }
+.dash-notif-list li { padding: 10px 14px; font-size: 12.5px; color: var(--sonara-text); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f4f7fb; }
+.dash-notif-list li:last-child { border-bottom: none; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.red { background: #ff3b30; } .dot.blue { background: var(--sonara-blue); } .dot.green { background: var(--sonara-green); }
+.dash-notif-more { width: 100%; height: 36px; border: none; background: #f4f7fb; font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--sonara-blue); cursor: pointer; }
+
+/* ---------- Account Menu ---------- */
+.account-menu-overlay { position: fixed; inset: 0; z-index: 39; background: transparent; }
+.account-menu { position: fixed; top: 72px; right: 16px; width: 340px; background: var(--sonara-blue); border-radius: 18px; padding: 18px 16px 16px; box-shadow: 0 12px 36px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12); border: 1px solid rgba(255,255,255,0.08); z-index: 40; display: flex; flex-direction: column; gap: 0; animation: accountMenuIn 0.28s ease-out; }
+@keyframes accountMenuIn { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.account-menu-header { display: flex; align-items: center; gap: 14px; width: 100%; margin-bottom: 14px; }
+.account-menu-avatar { width: 56px; height: 56px; background: #fff; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); flex-shrink: 0; }
+.account-menu-avatar .material-symbols-outlined { font-size: 36px; color: #000; font-variation-settings: 'FILL' 1; }
+.account-menu-info { display: flex; flex-direction: column; gap: 2px; }
+.account-menu-name { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: #fff; line-height: 1.1; }
+.account-menu-role { font-size: 11px; color: rgba(255,255,255,0.72); line-height: 1.2; }
+.account-menu-pills { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.account-menu-pill { display: flex; align-items: center; background: #fff; border-radius: var(--radius-pill); overflow: hidden; height: 34px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.account-menu-pill-label { background: var(--sonara-blue); color: #fff; border: 1.5px solid #fff; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600; padding: 0 10px; height: 26px; display: grid; place-items: center; margin-left: 3px; white-space: nowrap; }
+.account-menu-pill-value { flex: 1; text-align: center; font-size: 12px; font-weight: 600; color: var(--sonara-blue); padding-right: 6px; }
+.account-menu-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.22); margin: 14px 0; }
+.account-menu-btn { width: 100%; height: 38px; border-radius: var(--radius-pill); font-family: var(--font-body); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.18s; }
+.account-menu-btn-edit { border: 1.5px solid rgba(255,255,255,0.9); background: transparent; color: #fff; }
+.account-menu-btn-edit:hover { background: rgba(255,255,255,0.1); }
+.account-menu-btn-logout { margin-top: 8px; border: none; background: var(--sonara-red); color: #fff; box-shadow: 0 4px 12px rgba(226,60,60,0.32); }
+.account-menu-btn-logout:hover { background: #D93232; }
+.account-menu-btn .material-symbols-outlined { font-size: 18px; }
+
+/* ---------- Mobile Menu (dropdown) ---------- */
+.mobile-menu-overlay { position: fixed; inset: 0; top: 70px; background: rgba(0,0,0,0.18); z-index: 45; animation: fadeIn 0.2s ease-out; }
+.mobile-menu { position: fixed; top: 70px; left: 0; right: 0; z-index: 46; display: flex; flex-direction: column; background: var(--sonara-green); max-height: 70vh; max-height: 70dvh; border-radius: 0 0 16px 16px; box-shadow: 0 12px 28px rgba(0,0,0,0.22); overflow: hidden; animation: mobileMenuDrop 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes mobileMenuDrop { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+.mobile-menu-body { flex: 1; background: var(--sonara-green); padding: 16px 0 12px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.mobile-menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 20px; color: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; transition: background 0.18s; position: relative; border: none; background: transparent; width: 100%; text-align: left; }
+.mobile-menu-item:hover { background: rgba(255,255,255,0.1); }
+.mobile-menu-item .material-symbols-outlined { font-size: 22px; opacity: 0.95; }
+.mobile-menu-badge { margin-left: auto; background: var(--sonara-red-bright); color: #fff; font-size: 11px; font-weight: 700; min-width: 22px; height: 22px; border-radius: var(--radius-pill); display: grid; place-items: center; padding: 0 6px; }
+.mobile-menu-footer { background: var(--sonara-red-bright); padding: 12px 20px; flex-shrink: 0; }
+.mobile-menu-logout { display: flex; align-items: center; gap: 14px; color: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.4px; background: transparent; border: none; cursor: pointer; width: 100%; padding: 6px 0; }
+.mobile-menu-logout .material-symbols-outlined { font-size: 22px; }
+@media (max-width: 560px) { .mobile-menu-overlay { top: 62px; } .mobile-menu { top: 62px; } }
+@media (max-width: 480px) { .account-menu { right: 12px; left: 12px; width: auto; } }

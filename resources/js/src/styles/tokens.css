@@ -1,0 +1,64 @@
+/* ======================================================
+   SONARA — Design Tokens (central)
+   Couleurs, typographies, rayons, ombres, espacements
+   ====================================================== */
+:root {
+  /* — Couleurs principales — */
+  --sonara-blue: #0E4A90;
+  --sonara-blue-dark: #0C3F85;
+  --sonara-blue-deep: #0F4690;
+  --sonara-blue-soft: #D9E6F6;
+  --sonara-green: #0FA84E;
+  --sonara-green-alt: #0AA84C;
+  --sonara-green-light: #D6F0DD;
+  --sonara-green-soft: #E8F5E9;
+  --sonara-red: #E23C3C;
+  --sonara-red-deep: #E74C3C;
+  --sonara-red-bright: #E30613;
+  --sonara-yellow: #FFF0C7;
+  --sonara-yellow-soft: #FFF8E1;
+  --sonara-gray-soft: #E6E8EB;
+
+  /* — Neutres — */
+  --sonara-bg: #EEF2F7;
+  --sonara-bg-card: #FFFFFF;
+  --sonara-text: #1A2A3A;
+  --sonara-text-muted: #5A6A7A;
+  --sonara-text-light: #8A98AA;
+  --sonara-border: #DBE2EA;
+  --sonara-border-light: #E6EAF0;
+  --sonara-border-card: #E8ECF1;
+
+  /* — États — */
+  --sonara-attente-bg: #FFF8E1;
+  --sonara-attente-text: #C99700;
+  --sonara-attente-border: #F5E6A3;
+  --sonara-ok-bg: #E8F5E9;
+  --sonara-ok-text: #0FA84E;
+  --sonara-ok-border: #B6E2C0;
+  --sonara-ko-bg: #FCE8E9;
+  --sonara-ko-text: #E74C3C;
+  --sonara-ko-border: #F0B8BB;
+  --sonara-info-bg: #EEF4FF;
+
+  /* — Ombres — */
+  --shadow-card: 0 14px 36px rgba(0,0,0,0.14);
+  --shadow-card-sm: 0 4px 14px rgba(0,0,0,0.06);
+  --shadow-pop: 0 12px 32px rgba(0,0,0,0.18);
+  --shadow-topbar: 0 2px 10px rgba(0,0,0,0.18);
+
+  /* — Rayons — */
+  --radius-card: 22px;
+  --radius-card-lg: 24px;
+  --radius-pill: 999px;
+  --radius-input: 10px;
+
+  /* — Typo — */
+  --font-display: 'Bauhaus 93', 'Trebuchet MS', sans-serif;
+  --font-body: "Trebuchet MS", "Trebuchet", "Segoe UI", sans-serif;
+
+  /* — Layout — */
+  --topbar-h: 64px;
+  --topbar-h-mobile: 56px;
+  --content-max: 1240px;
+}

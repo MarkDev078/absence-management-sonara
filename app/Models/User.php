@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -73,11 +74,21 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the roles of the user.
+     *
+     * @return BelongsToMany<Role, $this>
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
      * Check if the user has a specific role.
      */
     public function hasRole(string $role): bool
     {
-        return $this->role === $role;
+        return $this->roles()->where('name', $role)->exists();
     }
 
     /**
@@ -87,7 +98,29 @@ class User extends Authenticatable
      */
     public function hasAnyRole(array $roles): bool
     {
-        return (bool) count(array_intersect($roles, [$this->role]));
+        return $this->roles()->whereIn('name', $roles)->exists();
+    }
+
+    /**
+     * Determine if the user is a subordinate (directly or indirectly) of a potential manager.
+     */
+    public function isSubordinateOf(User $potentialManager): bool
+    {
+        $current = $this;
+
+        while ($current->manager_id) {
+            if ($current->manager_id === $potentialManager->id) {
+                return true;
+            }
+
+            $current = $current->manager;
+
+            if (! $current) {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     /**

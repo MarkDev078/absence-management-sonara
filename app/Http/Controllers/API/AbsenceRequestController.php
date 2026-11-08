@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
 class AbsenceRequestController extends Controller
@@ -98,17 +99,7 @@ class AbsenceRequestController extends Controller
      */
     public function show(AbsenceRequest $absenceRequest): JsonResponse
     {
-        $user = Auth::user();
-
-        // Check if user can view this request
-        if ($user->isEmployee() && $absenceRequest->employee_id !== $user->id) {
-            // Employee can only see their own requests
-            abort(403, 'Unauthorized');
-        } elseif ($user->isManager() && ! $user->managedAbsenceRequests()->where('id', $absenceRequest->id)->exists()) {
-            // Manager can only see their team's requests
-            abort(403, 'Unauthorized');
-        }
-        // RH and Admin can see all
+        Gate::authorize('view', $absenceRequest);
 
         $absenceRequest->load(['absenceType', 'employee', 'approvals.approver', 'returnToWork']);
 
@@ -187,25 +178,26 @@ class AbsenceRequestController extends Controller
         // Only employees can submit their own draft requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && $absenceRequest->status === 'draft') {
             // Change status to pending and set to first approval level
-            $absenceRequest->update([
-                'status' => 'pending',
-                'current_approval_level' => 1, // First level is manager
-            ]);
-
-            // Create approval record for the first level (manager)
             $employee = $absenceRequest->employee;
             /** @var User $employee */
             $managerId = $employee->manager_id;
 
+            $absenceRequest->update([
+                'status' => 'pending',
+                'current_approval_level' => 1,
+                'current_approver_id' => $managerId,
+            ]);
+
+            // Create approval record for the first level (manager)
             if ($managerId) {
                 Approval::create([
                     'absence_request_id' => $absenceRequest->id,
                     'approver_id' => $managerId,
-                    'step' => 1, // First level is manager
-                    // status defaults to NULL (pending)
-                    // approved_at defaults to NULL
-                    // comment defaults to NULL
+                    'step' => 1,
                 ]);
+            } else {
+                // No manager in the chain, auto-approve the request
+                $absenceRequest->update(['status' => 'approved']);
             }
 
             $absenceRequest->load('absenceType', 'employee');
@@ -225,8 +217,8 @@ class AbsenceRequestController extends Controller
 
         // Only employees can cancel their own pending requests
         if ($user->isEmployee() && $absenceRequest->employee_id === $user->id && in_array($absenceRequest->status, ['pending', 'approved'])) {
-            // Check if it's already been approved at all levels
-            if ($absenceRequest->approvals()->where('status', 'approved')->count() >= 3) { // Assuming 3 levels
+            // Check if request is already fully approved
+            if ($absenceRequest->status === 'approved') {
                 abort(403, 'Cannot cancel fully approved request');
             }
 
@@ -256,5 +248,21 @@ class AbsenceRequestController extends Controller
             ->get();
 
         return response()->json($requests);
+    }
+
+    /**
+     * RH acknowledgment (prise de connaissance) of an approved absence request.
+     */
+    public function acknowledgeRh(Request $request, AbsenceRequest $absenceRequest): JsonResponse
+    {
+        $user = $request->user();
+
+        Gate::authorize('acknowledgeRh', $absenceRequest);
+
+        $absenceRequest->acknowledgeRh($user);
+
+        $absenceRequest->load(['absenceType', 'employee', 'approvals.approver', 'rhAcknowledger']);
+
+        return response()->json($absenceRequest);
     }
 }

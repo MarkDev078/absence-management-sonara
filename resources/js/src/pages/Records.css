@@ -1,0 +1,13 @@
+.records-card { min-width:0; }
+.records-tabs { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0; }
+.records-tabs button { min-height:40px; border:1px solid #c9c9c9; border-radius:9px; background:white; color:#111; font:700 13px var(--font-body); cursor:pointer; display:flex; justify-content:center; align-items:center; gap:8px; padding:7px; }
+.records-tabs button.active { background:var(--sonara-blue); border-color:var(--sonara-blue); color:white; }
+.records-tabs .material-symbols-outlined { font-size:20px; }
+.records-table-wrap { min-height:200px; }
+.records-table-wrap tbody tr[role=link] { cursor:pointer; }
+.records-table-wrap tbody tr[role=link]:focus-visible { outline:2px solid #0e4a90; outline-offset:-2px; }
+.record-person { display:flex; align-items:center; gap:8px; max-width:210px; }
+.record-person > span:last-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; }
+.record-avatar { width:30px; height:30px; border:1px solid #bec8d3; border-radius:50%; background:white; flex-shrink:0; display:grid; place-items:center; }
+.record-avatar .material-symbols-outlined { font-size:24px; color:#000; font-variation-settings:'FILL' 1; }
+@media(max-width:560px) { .records-tabs{gap:7px}.records-tabs button{font-size:11px}.hist-search-filter{max-width:50%}.hist-search-filter select{max-width:100%;font-size:11px}.records-table-wrap{min-height:160px} }

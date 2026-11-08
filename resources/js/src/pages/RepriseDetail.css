@@ -1,0 +1,4 @@
+.reprise-detail-card { min-height:440px; }
+.rp-detail-link { flex:1; background:transparent; border:0; text-align:left; color:#0e4a90; font:700 12.5px var(--font-body); text-decoration:underline; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; }
+.rp-detail-text { min-height:70px; border:1px solid #dbe2ea; border-radius:8px; padding:10px; color:#1a2a3a; font:13px/1.4 var(--font-body); white-space:pre-wrap; overflow-wrap:anywhere; }
+.rp-medical-summary { overflow:visible; padding-right:8px; }.rp-medical-summary > span:first-child { flex:0 0 auto; margin-right:10px; }.rp-medical-summary .document-list { flex:1; }

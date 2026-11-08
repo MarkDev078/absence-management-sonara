@@ -17,6 +17,7 @@ class Approval extends Model
         'approver_id',
         'step',
         'status',
+        'kind',
         'comment',
         'approved_at',
     ];
@@ -28,6 +29,7 @@ class Approval extends Model
      */
     protected $casts = [
         'step' => 'integer',
+        'kind' => 'string',
         'approved_at' => 'datetime',
     ];
 

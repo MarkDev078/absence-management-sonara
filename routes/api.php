@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     // User profile
     Route::get('/profile', [AuthController::class, 'profile']);
-    Route::post('/logout', [AuthController::class, 'logout']);
 
     // Absence Types (accessible based on role)
     Route::apiResource('absence-types', AbsenceTypeController::class)
@@ -36,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('role:employee');
     Route::post('absence-requests/{absenceRequest}/cancel', [AbsenceRequestController::class, 'cancel'])
         ->middleware('role:employee');
+    Route::post('absence-requests/{absenceRequest}/acknowledge-rh', [AbsenceRequestController::class, 'acknowledgeRh'])
+        ->middleware('role:rh');
 
     // Approvals (for managers, RH, admin)
     Route::get('approvals/pending', [ApprovalController::class, 'pending'])

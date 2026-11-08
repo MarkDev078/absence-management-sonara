@@ -1,0 +1,78 @@
+/* ======================================================
+   SONARA — Dashboard (spécifique)
+   Le layout commun (topbar, bg, profil) est dans styles/base.css
+   Les composants (toasts, FAB, notifs) sont dans styles/components.css
+   ====================================================== */
+
+/* ---------- En-tête du board ---------- */
+.dash-board {
+  padding: 22px 20px 18px;
+  opacity: 0;
+  transform: translateY(16px);
+}
+.dash-board.animated { animation: dashCardIn 0.6s ease-out forwards; animation-delay: 0.28s; }
+.dash-board-header { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+.dash-board-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--sonara-blue); letter-spacing: 0.4px; }
+.dash-board-subtitle { font-size: 12.5px; color: var(--sonara-text-muted); margin-top: 4px; line-height: 1.45; }
+.dash-refresh { width: 36px; height: 36px; border-radius: var(--radius-pill); border: 1.5px solid var(--sonara-border-light); background: #fff; display: grid; place-items: center; cursor: pointer; transition: all 0.2s; color: var(--sonara-blue); flex-shrink: 0; }
+.dash-refresh:hover { background: #f4f7fb; transform: rotate(30deg); }
+.dash-refresh .material-symbols-outlined { font-size: 20px; }
+
+/* ---------- Chips d'actions ---------- */
+.dash-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.dash-chip { height: 34px; padding: 0 14px; border-radius: var(--radius-pill); border: 1px solid var(--sonara-border); background: #fff; color: var(--sonara-text); font-family: var(--font-body); font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.18s; position: relative; }
+.dash-chip:hover { border-color: var(--sonara-blue); background: #f0f5ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14,74,144,0.12); }
+.dash-chip-icon { font-size: 18px; color: var(--sonara-blue); }
+.dash-chip.has-dot { padding-right: 18px; }
+
+/* ---------- Stats (spécifique dashboard) ---------- */
+.dash-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dash-stat { display: flex; align-items: stretch; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--sonara-border-card); box-shadow: var(--shadow-card-sm); cursor: pointer; transition: all 0.22s ease; min-height: 88px; }
+.dash-stat:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.1); border-color: #d0d9e6; }
+.dash-stat-icon { flex: 0 0 78px; display: grid; place-items: center; font-size: 28px; }
+.dash-stat-icon .material-symbols-outlined { font-size: 32px; }
+.dash-stat-blue .dash-stat-icon { background: var(--sonara-blue-soft); color: var(--sonara-blue); }
+.dash-stat-green .dash-stat-icon { background: var(--sonara-green-light); color: var(--sonara-green); }
+.dash-stat-yellow .dash-stat-icon { background: var(--sonara-yellow); color: #C99700; }
+.dash-stat-gray .dash-stat-icon { background: var(--sonara-gray-soft); color: #2b3545; }
+.dash-stat-icon-text { font-family: var(--font-display); font-size: 16px; font-weight: 400; letter-spacing: 0.5px; }
+.dash-stat-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 12px 14px; }
+.dash-stat-number { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--sonara-blue); }
+.dash-stat-green .dash-stat-number { color: var(--sonara-green); }
+.dash-stat-yellow .dash-stat-number { color: #B78A00; }
+.dash-stat-gray .dash-stat-number { color: #1a2636; }
+.dash-stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; color: #7a8696; margin-top: 4px; line-height: 1.2; }
+
+/* ---------- Éléments mobiles spécifiques dashboard ---------- */
+.dash-mobile-pill { max-width: 640px; margin: 10px auto 0; background: var(--sonara-blue-deep); border-radius: var(--radius-pill); padding: 6px; display: none; align-items: center; gap: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); position: relative; z-index: 2; }
+.dash-mobile-avatar { width: 42px; height: 42px; background: #fff; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; }
+.dash-mobile-avatar .material-symbols-outlined { font-size: 28px; color: #000; font-variation-settings: 'FILL' 1; }
+.dash-mobile-infos { flex: 1; height: 36px; border-radius: var(--radius-pill); border: 1.5px solid rgba(255,255,255,0.9); background: transparent; color: #fff; font-family: var(--font-body); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; }
+.dash-dots { letter-spacing: 2px; opacity: 0.9; }
+.dash-mobile-edit { width: 36px; height: 36px; border-radius: var(--radius-pill); border: 1.5px solid rgba(255,255,255,0.85); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer; }
+.dash-mobile-edit .material-symbols-outlined { font-size: 18px; }
+.dash-mobile-logout { width: 36px; height: 36px; border-radius: var(--radius-pill); border: none; background: var(--sonara-red); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.dash-mobile-logout .material-symbols-outlined { font-size: 18px; }
+.dash-actions-mobile { display: none; gap: 8px; justify-content: space-between; margin-bottom: 14px; }
+.dash-circle-btn { width: 38px; height: 38px; border-radius: var(--radius-pill); border: 1px solid var(--sonara-border); background: #fff; color: var(--sonara-blue); display: grid; place-items: center; cursor: pointer; }
+.dash-circle-btn .material-symbols-outlined { font-size: 18px; }
+/* Sept actions pour les responsables, sans déborder sur les petits écrans. */
+.dash-actions-mobile--team { gap: 4px; }
+.dash-actions-mobile--team .dash-circle-btn { width: min(38px, calc((100% - 24px) / 7)); height: auto; aspect-ratio: 1; flex-shrink: 0; }
+
+/* ---------- Responsive spécifique dashboard ---------- */
+@media (max-width: 980px) {
+  .dash-actions { display: none !important; }
+  .dash-actions-mobile { display: flex !important; }
+  .dash-mobile-pill { display: flex !important; animation: dashCardIn 0.55s ease-out 0.08s backwards; }
+}
+@media (max-width: 860px) {
+  /* La barre fixe ne doit pas masquer le profil mobile et sa déconnexion. */
+  .dash-mobile-pill { width: min(604px, calc(100% - 36px)); margin-top: calc(var(--topbar-h) + 16px); }
+  .dash-mobile-pill + .dash-main { padding-top: 12px; }
+}
+@media (max-width: 560px) {
+  .dash-mobile-pill { width: calc(100% - 24px); margin-top: calc(var(--topbar-h-mobile) + 16px); }
+  .dash-stats { grid-template-columns: 1fr; }
+  .dash-chip { font-size: 11.5px; padding: 0 10px; height: 32px; }
+}
